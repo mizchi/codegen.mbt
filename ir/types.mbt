@@ -21,69 +21,6 @@ pub enum Type {
   Error(Type)
 }
 
-///|
-impl Show for Type with output(self, logger) {
-  match self {
-    Primitive(name) => logger.write_string(name)
-    Optional(inner) => {
-      inner.output(logger)
-      logger.write_string("?")
-    }
-    Array(inner) => {
-      logger.write_string("Array[")
-      inner.output(logger)
-      logger.write_string("]")
-    }
-    Map(key, value) => {
-      logger.write_string("Map[")
-      key.output(logger)
-      logger.write_string(", ")
-      value.output(logger)
-      logger.write_string("]")
-    }
-    Named(name, args) =>
-      if args.is_empty() {
-        logger.write_string(name)
-      } else {
-        logger.write_string(name)
-        logger.write_string("[")
-        for i, arg in args {
-          if i > 0 {
-            logger.write_string(", ")
-          }
-          arg.output(logger)
-        }
-        logger.write_string("]")
-      }
-    Function(params, ret) => {
-      logger.write_string("(")
-      for i, param in params {
-        if i > 0 {
-          logger.write_string(", ")
-        }
-        param.output(logger)
-      }
-      logger.write_string(") -> ")
-      ret.output(logger)
-    }
-    Tuple(types) => {
-      logger.write_string("(")
-      for i, ty in types {
-        if i > 0 {
-          logger.write_string(", ")
-        }
-        ty.output(logger)
-      }
-      logger.write_string(")")
-    }
-    Error(inner) => {
-      logger.write_string("Error[")
-      inner.output(logger)
-      logger.write_string("]")
-    }
-  }
-}
-
 // Convenience constructors
 
 ///|

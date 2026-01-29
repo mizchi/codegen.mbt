@@ -30,20 +30,6 @@ pub fn Visibility::pkg(pkg : String) -> Visibility {
 }
 
 ///|
-impl Show for Visibility with output(self, logger) {
-  match self {
-    Public => logger.write_string("pub")
-    Private => logger.write_string("priv")
-    ReadOnly => logger.write_string("pub(readonly)")
-    Package(pkg) => {
-      logger.write_string("pub(")
-      logger.write_string(pkg)
-      logger.write_string(")")
-    }
-  }
-}
-
-///|
 pub struct Field {
   name : String
   ty : Type

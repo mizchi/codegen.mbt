@@ -2,7 +2,6 @@
   "import": [
     "mizchi/codegen/ir",
     "mizchi/codegen/builder",
-    "mizchi/codegen/emit",
-    "mizchi/codegen/utils"
+    "mizchi/codegen/emit"
   ]
 }
