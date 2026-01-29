@@ -52,3 +52,6 @@ pub type JsonSchemaEmitter = @emit.JsonSchemaEmitter
 
 ///|
 pub type ValidatorEmitter = @emit.ValidatorEmitter
+
+///|
+pub type FbsEmitter = @emit.FbsEmitter
