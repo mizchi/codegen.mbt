@@ -1,0 +1,6 @@
+{
+  "import": [
+    "mizchi/codegen/ir",
+    "mizchi/codegen/utils"
+  ]
+}
