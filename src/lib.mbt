@@ -33,6 +33,8 @@ pub type Visibility = @ir.Visibility
 pub type Constraints = @ir.Constraints
 
 // Re-export builders
+
+///|
 pub type StructBuilder = @builder.StructBuilder
 
 ///|
@@ -45,6 +47,8 @@ pub type FunctionBuilder = @builder.FunctionBuilder
 pub type ModuleBuilder = @builder.ModuleBuilder
 
 // Re-export emitters
+
+///|
 pub type MoonBitEmitter = @emit.MoonBitEmitter
 
 ///|

@@ -61,7 +61,7 @@ pub fn Enum::new(name : String) -> Enum {
 pub fn Enum::with_variant(self : Enum, variant : Variant) -> Enum {
   let variants = self.variants.copy()
   variants.push(variant)
-  { ..self, variants }
+  { ..self, variants, }
 }
 
 ///|

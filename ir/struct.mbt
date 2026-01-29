@@ -3,9 +3,9 @@
 
 ///|
 pub enum Visibility {
-  Public        // pub
-  Private       // priv
-  ReadOnly      // pub(readonly)
+  Public // pub
+  Private // priv
+  ReadOnly // pub(readonly)
   Package(String) // pub(pkg)
 }
 
@@ -48,14 +48,21 @@ pub struct Field {
   name : String
   ty : Type
   doc : String?
-  default_value : String?  // Expression as string for now
+  default_value : String? // Expression as string for now
   is_mutable : Bool
   constraints : Constraints
 }
 
 ///|
 pub fn Field::new(name : String, ty : Type) -> Field {
-  { name, ty, doc: None, default_value: None, is_mutable: false, constraints: Constraints::new() }
+  {
+    name,
+    ty,
+    doc: None,
+    default_value: None,
+    is_mutable: false,
+    constraints: Constraints::new(),
+  }
 }
 
 ///|
@@ -139,7 +146,7 @@ pub fn Struct::new(name : String) -> Struct {
 pub fn Struct::with_field(self : Struct, field : Field) -> Struct {
   let fields = self.fields.copy()
   fields.push(field)
-  { ..self, fields }
+  { ..self, fields, }
 }
 
 ///|
@@ -162,7 +169,10 @@ pub fn Struct::with_visibility(self : Struct, vis : Visibility) -> Struct {
 }
 
 ///|
-pub fn Struct::with_type_params(self : Struct, params : Array[String]) -> Struct {
+pub fn Struct::with_type_params(
+  self : Struct,
+  params : Array[String],
+) -> Struct {
   { ..self, type_params: params }
 }
 

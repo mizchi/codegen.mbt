@@ -34,7 +34,7 @@ pub fn FunctionBuilder::new(name : String) -> FunctionBuilder {
 ///|
 pub fn FunctionBuilder::with_doc(
   self : FunctionBuilder,
-  doc : String
+  doc : String,
 ) -> FunctionBuilder {
   self.doc = Some(doc)
   self
@@ -43,7 +43,7 @@ pub fn FunctionBuilder::with_doc(
 ///|
 pub fn FunctionBuilder::with_visibility(
   self : FunctionBuilder,
-  vis : @ir.Visibility
+  vis : @ir.Visibility,
 ) -> FunctionBuilder {
   self.visibility = vis
   self
@@ -52,7 +52,7 @@ pub fn FunctionBuilder::with_visibility(
 ///|
 pub fn FunctionBuilder::add_type_param(
   self : FunctionBuilder,
-  name : String
+  name : String,
 ) -> FunctionBuilder {
   self.type_params.push(name)
   self
@@ -62,7 +62,7 @@ pub fn FunctionBuilder::add_type_param(
 pub fn FunctionBuilder::add_param(
   self : FunctionBuilder,
   name : String,
-  ty : @ir.Type
+  ty : @ir.Type,
 ) -> FunctionBuilder {
   self.params.push(@ir.Param::new(name, ty))
   self
@@ -73,7 +73,7 @@ pub fn FunctionBuilder::add_labeled_param(
   self : FunctionBuilder,
   name : String,
   ty : @ir.Type,
-  label : String
+  label : String,
 ) -> FunctionBuilder {
   self.params.push(@ir.Param::new(name, ty).with_label(label))
   self
@@ -84,7 +84,7 @@ pub fn FunctionBuilder::add_optional_param(
   self : FunctionBuilder,
   name : String,
   ty : @ir.Type,
-  default_val : String
+  default_val : String,
 ) -> FunctionBuilder {
   self.params.push(@ir.Param::new(name, ty).with_default(default_val))
   self
@@ -93,7 +93,7 @@ pub fn FunctionBuilder::add_optional_param(
 ///|
 pub fn FunctionBuilder::add_param_with(
   self : FunctionBuilder,
-  param : @ir.Param
+  param : @ir.Param,
 ) -> FunctionBuilder {
   self.params.push(param)
   self
@@ -102,7 +102,7 @@ pub fn FunctionBuilder::add_param_with(
 ///|
 pub fn FunctionBuilder::with_return(
   self : FunctionBuilder,
-  ty : @ir.Type
+  ty : @ir.Type,
 ) -> FunctionBuilder {
   self.return_type = ty
   self
@@ -111,7 +111,7 @@ pub fn FunctionBuilder::with_return(
 ///|
 pub fn FunctionBuilder::with_raises(
   self : FunctionBuilder,
-  error_type : @ir.Type
+  error_type : @ir.Type,
 ) -> FunctionBuilder {
   self.error_type = Some(error_type)
   self
@@ -126,7 +126,7 @@ pub fn FunctionBuilder::as_async(self : FunctionBuilder) -> FunctionBuilder {
 ///|
 pub fn FunctionBuilder::with_body(
   self : FunctionBuilder,
-  code : String
+  code : String,
 ) -> FunctionBuilder {
   self.body = Some(code)
   self
@@ -136,7 +136,7 @@ pub fn FunctionBuilder::with_body(
 pub fn FunctionBuilder::with_receiver(
   self : FunctionBuilder,
   name : String,
-  ty : @ir.Type
+  ty : @ir.Type,
 ) -> FunctionBuilder {
   self.receiver = Some((name, ty))
   self

@@ -16,7 +16,7 @@ pub fn ModuleBuilder::new() -> ModuleBuilder {
 ///|
 pub fn ModuleBuilder::with_name(
   self : ModuleBuilder,
-  name : String
+  name : String,
 ) -> ModuleBuilder {
   self.name = Some(name)
   self
@@ -25,7 +25,7 @@ pub fn ModuleBuilder::with_name(
 ///|
 pub fn ModuleBuilder::add_import(
   self : ModuleBuilder,
-  path : String
+  path : String,
 ) -> ModuleBuilder {
   self.imports.push(@ir.Import::new(path))
   self
@@ -35,7 +35,7 @@ pub fn ModuleBuilder::add_import(
 pub fn ModuleBuilder::add_import_as(
   self : ModuleBuilder,
   path : String,
-  as_name : String
+  as_name : String,
 ) -> ModuleBuilder {
   self.imports.push(@ir.Import::new(path).with_alias(as_name))
   self
@@ -44,7 +44,7 @@ pub fn ModuleBuilder::add_import_as(
 ///|
 pub fn ModuleBuilder::add_struct(
   self : ModuleBuilder,
-  s : @ir.Struct
+  s : @ir.Struct,
 ) -> ModuleBuilder {
   self.items.push(@ir.TopLevel::struct_(s))
   self
@@ -53,7 +53,7 @@ pub fn ModuleBuilder::add_struct(
 ///|
 pub fn ModuleBuilder::add_enum(
   self : ModuleBuilder,
-  e : @ir.Enum
+  e : @ir.Enum,
 ) -> ModuleBuilder {
   self.items.push(@ir.TopLevel::enum_(e))
   self
@@ -62,7 +62,7 @@ pub fn ModuleBuilder::add_enum(
 ///|
 pub fn ModuleBuilder::add_function(
   self : ModuleBuilder,
-  f : @ir.Function
+  f : @ir.Function,
 ) -> ModuleBuilder {
   self.items.push(@ir.TopLevel::function(f))
   self
@@ -71,7 +71,7 @@ pub fn ModuleBuilder::add_function(
 ///|
 pub fn ModuleBuilder::add_const(
   self : ModuleBuilder,
-  c : @ir.ConstDecl
+  c : @ir.ConstDecl,
 ) -> ModuleBuilder {
   self.items.push(@ir.TopLevel::const_(c))
   self
@@ -80,7 +80,7 @@ pub fn ModuleBuilder::add_const(
 ///|
 pub fn ModuleBuilder::add_type_alias(
   self : ModuleBuilder,
-  t : @ir.TypeAlias
+  t : @ir.TypeAlias,
 ) -> ModuleBuilder {
   self.items.push(@ir.TopLevel::type_alias(t))
   self
@@ -89,7 +89,7 @@ pub fn ModuleBuilder::add_type_alias(
 ///|
 pub fn ModuleBuilder::add_trait(
   self : ModuleBuilder,
-  t : @ir.Trait
+  t : @ir.Trait,
 ) -> ModuleBuilder {
   self.items.push(@ir.TopLevel::trait_(t))
   self
@@ -98,7 +98,7 @@ pub fn ModuleBuilder::add_trait(
 ///|
 pub fn ModuleBuilder::add_impl(
   self : ModuleBuilder,
-  i : @ir.Impl
+  i : @ir.Impl,
 ) -> ModuleBuilder {
   self.items.push(@ir.TopLevel::impl_(i))
   self

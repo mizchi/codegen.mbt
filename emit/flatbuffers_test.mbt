@@ -62,13 +62,13 @@ test "emit module as fbs schema" {
     .with_name("myapp")
     .add_struct(
       @ir.Struct::new("User")
-        .with_field(@ir.Field::new("id", @ir.Type::int64()))
-        .with_field(@ir.Field::new("name", @ir.Type::string())),
+      .with_field(@ir.Field::new("id", @ir.Type::int64()))
+      .with_field(@ir.Field::new("name", @ir.Type::string())),
     )
     .add_enum(
       @ir.Enum::new("Status")
-        .with_variant(@ir.Variant::new("Active"))
-        .with_variant(@ir.Variant::new("Inactive")),
+      .with_variant(@ir.Variant::new("Active"))
+      .with_variant(@ir.Variant::new("Inactive")),
     )
   let emitter = FbsEmitter::new()
   let code = emitter.emit_module(mod)

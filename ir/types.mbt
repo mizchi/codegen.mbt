@@ -85,6 +85,7 @@ impl Show for Type with output(self, logger) {
 }
 
 // Convenience constructors
+
 ///|
 pub fn Type::unit() -> Type {
   Primitive("Unit")

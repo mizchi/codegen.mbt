@@ -4,33 +4,49 @@
 ///|
 pub struct JsonSchemaEmitter {
   indent_size : Int
-  schema_draft : String  // e.g., "https://json-schema.org/draft/2020-12/schema"
+  schema_draft : String // e.g., "https://json-schema.org/draft/2020-12/schema"
 }
 
 ///|
 pub fn JsonSchemaEmitter::new() -> JsonSchemaEmitter {
-  { indent_size: 2, schema_draft: "https://json-schema.org/draft/2020-12/schema" }
+  {
+    indent_size: 2,
+    schema_draft: "https://json-schema.org/draft/2020-12/schema",
+  }
 }
 
 ///|
-pub fn JsonSchemaEmitter::with_indent(self : JsonSchemaEmitter, size : Int) -> JsonSchemaEmitter {
+pub fn JsonSchemaEmitter::with_indent(
+  self : JsonSchemaEmitter,
+  size : Int,
+) -> JsonSchemaEmitter {
   { ..self, indent_size: size }
 }
 
 ///|
-pub fn JsonSchemaEmitter::with_draft(self : JsonSchemaEmitter, draft : String) -> JsonSchemaEmitter {
+pub fn JsonSchemaEmitter::with_draft(
+  self : JsonSchemaEmitter,
+  draft : String,
+) -> JsonSchemaEmitter {
   { ..self, schema_draft: draft }
 }
 
 ///|
-pub fn JsonSchemaEmitter::emit_struct(self : JsonSchemaEmitter, s : @ir.Struct) -> String {
+pub fn JsonSchemaEmitter::emit_struct(
+  self : JsonSchemaEmitter,
+  s : @ir.Struct,
+) -> String {
   let buf = StringBuilder::new()
   self.emit_struct_to(buf, s)
   buf.to_string()
 }
 
 ///|
-fn JsonSchemaEmitter::emit_struct_to(self : JsonSchemaEmitter, buf : StringBuilder, s : @ir.Struct) -> Unit {
+fn JsonSchemaEmitter::emit_struct_to(
+  self : JsonSchemaEmitter,
+  buf : StringBuilder,
+  s : @ir.Struct,
+) -> Unit {
   buf.write_string("{\n")
   self.write_indent(buf, 1)
   buf.write_string("\"$schema\": \"")
@@ -109,7 +125,12 @@ fn is_optional_type(ty : @ir.Type) -> Bool {
 }
 
 ///|
-fn JsonSchemaEmitter::emit_field_to(self : JsonSchemaEmitter, buf : StringBuilder, field : @ir.Field, indent : Int) -> Unit {
+fn JsonSchemaEmitter::emit_field_to(
+  self : JsonSchemaEmitter,
+  buf : StringBuilder,
+  field : @ir.Field,
+  indent : Int,
+) -> Unit {
   self.write_indent(buf, indent)
   buf.write_string("\"")
   buf.write_string(field.name)
@@ -124,7 +145,7 @@ fn JsonSchemaEmitter::emit_type_schema_to(
   ty : @ir.Type,
   constraints : @ir.Constraints,
   doc : String?,
-  indent : Int
+  indent : Int,
 ) -> Unit {
   buf.write_string("{\n")
   let type_name = type_to_json_schema_type(ty)
@@ -155,7 +176,7 @@ fn JsonSchemaEmitter::emit_constraints_to(
   buf : StringBuilder,
   ty : @ir.Type,
   c : @ir.Constraints,
-  indent : Int
+  indent : Int,
 ) -> Unit {
   // minLength
   match c.min_length {
@@ -178,11 +199,7 @@ fn JsonSchemaEmitter::emit_constraints_to(
     None => ()
   }
   // minimum
-  let min_val : Int64? = if c.unsigned {
-    Some(0L)
-  } else {
-    c.min_value
-  }
+  let min_val : Int64? = if c.unsigned { Some(0L) } else { c.min_value }
   match min_val {
     Some(val) => {
       buf.write_string(",\n")
@@ -219,7 +236,13 @@ fn JsonSchemaEmitter::emit_constraints_to(
       buf.write_string(",\n")
       self.write_indent(buf, indent)
       buf.write_string("\"items\": ")
-      self.emit_type_schema_to(buf, item_ty, @ir.Constraints::new(), None, indent)
+      self.emit_type_schema_to(
+        buf,
+        item_ty,
+        @ir.Constraints::new(),
+        None,
+        indent,
+      )
     }
     _ => ()
   }
@@ -228,35 +251,37 @@ fn JsonSchemaEmitter::emit_constraints_to(
 ///|
 fn type_to_json_schema_type(ty : @ir.Type) -> String {
   match ty {
-    @ir.Type::Primitive(name) => {
+    @ir.Type::Primitive(name) =>
       match name {
         "Int" | "Int64" | "UInt" | "UInt64" | "Byte" => "\"integer\""
         "Float" | "Double" => "\"number\""
         "Bool" => "\"boolean\""
         "String" => "\"string\""
-        "Bytes" => "\"string\""  // base64 encoded
+        "Bytes" => "\"string\"" // base64 encoded
         "Unit" => "\"null\""
         _ => "\"string\""
       }
-    }
     @ir.Type::Optional(inner) => {
       let inner_type = type_to_json_schema_type(inner)
       "[" + inner_type + ", \"null\"]"
     }
     @ir.Type::Array(_) => "\"array\""
     @ir.Type::Map(_, _) => "\"object\""
-    @ir.Type::Named(_name, _) => {
+    @ir.Type::Named(_name, _) =>
       // Reference to another schema
-      "\"object\""  // Simplified, could use $ref
-    }
+      "\"object\"" // Simplified, could use $ref
     @ir.Type::Tuple(_) => "\"array\""
-    @ir.Type::Function(_, _) => "\"null\""  // Functions not representable in JSON Schema
+    @ir.Type::Function(_, _) => "\"null\"" // Functions not representable in JSON Schema
     @ir.Type::Error(_) => "\"object\""
   }
 }
 
 ///|
-fn JsonSchemaEmitter::write_indent(self : JsonSchemaEmitter, buf : StringBuilder, level : Int) -> Unit {
+fn JsonSchemaEmitter::write_indent(
+  self : JsonSchemaEmitter,
+  buf : StringBuilder,
+  level : Int,
+) -> Unit {
   for _i = 0; _i < level * self.indent_size; _i = _i + 1 {
     buf.write_string(" ")
   }
@@ -279,7 +304,10 @@ fn escape_json_string(s : String) -> String {
 }
 
 ///|
-pub fn JsonSchemaEmitter::emit_enum(self : JsonSchemaEmitter, e : @ir.Enum) -> String {
+pub fn JsonSchemaEmitter::emit_enum(
+  self : JsonSchemaEmitter,
+  e : @ir.Enum,
+) -> String {
   let buf = StringBuilder::new()
   buf.write_string("{\n")
   self.write_indent(buf, 1)
@@ -302,12 +330,14 @@ pub fn JsonSchemaEmitter::emit_enum(self : JsonSchemaEmitter, e : @ir.Enum) -> S
     None => ()
   }
   // Check if it's a simple enum (all unit variants)
-  let is_simple = e.variants.iter().all(fn(v) {
-    match v.payload {
-      @ir.VariantPayload::None => true
-      _ => false
-    }
-  })
+  let is_simple = e.variants
+    .iter()
+    .all(fn(v) {
+      match v.payload {
+        @ir.VariantPayload::None => true
+        _ => false
+      }
+    })
   if is_simple {
     // Simple string enum
     buf.write_string(",\n")
@@ -344,7 +374,12 @@ pub fn JsonSchemaEmitter::emit_enum(self : JsonSchemaEmitter, e : @ir.Enum) -> S
 }
 
 ///|
-fn JsonSchemaEmitter::emit_variant_to(self : JsonSchemaEmitter, buf : StringBuilder, v : @ir.Variant, indent : Int) -> Unit {
+fn JsonSchemaEmitter::emit_variant_to(
+  self : JsonSchemaEmitter,
+  buf : StringBuilder,
+  v : @ir.Variant,
+  indent : Int,
+) -> Unit {
   self.write_indent(buf, indent)
   buf.write_string("{\n")
   self.write_indent(buf, indent + 1)
@@ -370,7 +405,13 @@ fn JsonSchemaEmitter::emit_variant_to(self : JsonSchemaEmitter, buf : StringBuil
           buf.write_string(",\n")
         }
         self.write_indent(buf, indent + 4)
-        self.emit_type_schema_to(buf, ty, @ir.Constraints::new(), None, indent + 4)
+        self.emit_type_schema_to(
+          buf,
+          ty,
+          @ir.Constraints::new(),
+          None,
+          indent + 4,
+        )
       }
       buf.write_string("\n")
       self.write_indent(buf, indent + 3)

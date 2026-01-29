@@ -51,7 +51,7 @@ pub fn TopLevel::impl_(i : Impl) -> TopLevel {
 pub struct ConstDecl {
   name : String
   ty : Type?
-  value : String  // Expression as string
+  value : String // Expression as string
   doc : String?
   visibility : Visibility
 }
@@ -72,7 +72,10 @@ pub fn ConstDecl::with_doc(self : ConstDecl, doc : String) -> ConstDecl {
 }
 
 ///|
-pub fn ConstDecl::with_visibility(self : ConstDecl, vis : Visibility) -> ConstDecl {
+pub fn ConstDecl::with_visibility(
+  self : ConstDecl,
+  vis : Visibility,
+) -> ConstDecl {
   { ..self, visibility: vis }
 }
 
@@ -96,14 +99,17 @@ pub fn TypeAlias::with_doc(self : TypeAlias, doc : String) -> TypeAlias {
 }
 
 ///|
-pub fn TypeAlias::with_visibility(self : TypeAlias, vis : Visibility) -> TypeAlias {
+pub fn TypeAlias::with_visibility(
+  self : TypeAlias,
+  vis : Visibility,
+) -> TypeAlias {
   { ..self, visibility: vis }
 }
 
 ///|
 pub fn TypeAlias::with_type_params(
   self : TypeAlias,
-  params : Array[String]
+  params : Array[String],
 ) -> TypeAlias {
   { ..self, type_params: params }
 }
@@ -134,7 +140,7 @@ pub fn Trait::new(name : String) -> Trait {
 pub fn Trait::with_method(self : Trait, func : Function) -> Trait {
   let methods = self.methods.copy()
   methods.push(func)
-  { ..self, methods }
+  { ..self, methods, }
 }
 
 ///|
@@ -146,12 +152,12 @@ pub fn Trait::with_doc(self : Trait, doc : String) -> Trait {
 pub fn Trait::with_super(self : Trait, super_trait : String) -> Trait {
   let super_traits = self.super_traits.copy()
   super_traits.push(super_trait)
-  { ..self, super_traits }
+  { ..self, super_traits, }
 }
 
 ///|
 pub struct Impl {
-  trait_name : String?     // None for inherent impl
+  trait_name : String? // None for inherent impl
   type_name : String
   methods : Array[Function]
   type_params : Array[String]
@@ -171,7 +177,7 @@ pub fn Impl::for_trait(self : Impl, trait_name : String) -> Impl {
 pub fn Impl::with_method(self : Impl, func : Function) -> Impl {
   let methods = self.methods.copy()
   methods.push(func)
-  { ..self, methods }
+  { ..self, methods, }
 }
 
 ///|
@@ -211,7 +217,7 @@ pub fn Module::with_name(self : Module, name : String) -> Module {
 pub fn Module::add(self : Module, item : TopLevel) -> Module {
   let items = self.items.copy()
   items.push(item)
-  { ..self, items }
+  { ..self, items, }
 }
 
 ///|
@@ -253,16 +259,16 @@ pub fn Module::add_impl(self : Module, i : Impl) -> Module {
 pub fn Module::with_import(self : Module, path : String) -> Module {
   let imports = self.imports.copy()
   imports.push({ path, as_name: None })
-  { ..self, imports }
+  { ..self, imports, }
 }
 
 ///|
 pub fn Module::with_import_as(
   self : Module,
   path : String,
-  as_name : String
+  as_name : String,
 ) -> Module {
   let imports = self.imports.copy()
   imports.push({ path, as_name: Some(as_name) })
-  { ..self, imports }
+  { ..self, imports, }
 }

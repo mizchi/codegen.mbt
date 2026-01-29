@@ -1,10 +1,8 @@
 ///|
 test "emit struct validator with required string" {
-  let s = @ir.Struct::new("CreateUserParams")
-    .with_field(
-      @ir.Field::new("name", @ir.Type::string())
-        .as_required(),
-    )
+  let s = @ir.Struct::new("CreateUserParams").with_field(
+    @ir.Field::new("name", @ir.Type::string()).as_required(),
+  )
   let emitter = ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
@@ -22,11 +20,9 @@ test "emit struct validator with required string" {
 
 ///|
 test "emit struct validator with max length" {
-  let s = @ir.Struct::new("UpdateUserParams")
-    .with_field(
-      @ir.Field::new("name", @ir.Type::string())
-        .with_max_length(100),
-    )
+  let s = @ir.Struct::new("UpdateUserParams").with_field(
+    @ir.Field::new("name", @ir.Type::string()).with_max_length(100),
+  )
   let emitter = ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
@@ -44,11 +40,9 @@ test "emit struct validator with max length" {
 
 ///|
 test "emit struct validator with unsigned int" {
-  let s = @ir.Struct::new("ProductParams")
-    .with_field(
-      @ir.Field::new("quantity", @ir.Type::int64())
-        .as_unsigned(),
-    )
+  let s = @ir.Struct::new("ProductParams").with_field(
+    @ir.Field::new("quantity", @ir.Type::int64()).as_unsigned(),
+  )
   let emitter = ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
@@ -66,11 +60,11 @@ test "emit struct validator with unsigned int" {
 
 ///|
 test "emit struct validator with optional field" {
-  let s = @ir.Struct::new("SearchParams")
-    .with_field(
-      @ir.Field::new("query", @ir.Type::optional(@ir.Type::string()))
-        .with_max_length(200),
-    )
+  let s = @ir.Struct::new("SearchParams").with_field(
+    @ir.Field::new("query", @ir.Type::optional(@ir.Type::string())).with_max_length(
+      200,
+    ),
+  )
   let emitter = ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
@@ -91,8 +85,9 @@ test "emit struct validator with optional field" {
 
 ///|
 test "emit struct validator with no constraints" {
-  let s = @ir.Struct::new("EmptyParams")
-    .with_field(@ir.Field::new("id", @ir.Type::int64()))
+  let s = @ir.Struct::new("EmptyParams").with_field(
+    @ir.Field::new("id", @ir.Type::int64()),
+  )
   let emitter = ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =

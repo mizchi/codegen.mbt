@@ -12,19 +12,28 @@ pub fn ValidatorEmitter::new() -> ValidatorEmitter {
 }
 
 ///|
-pub fn ValidatorEmitter::without_separators(_self : ValidatorEmitter) -> ValidatorEmitter {
+pub fn ValidatorEmitter::without_separators(
+  _self : ValidatorEmitter,
+) -> ValidatorEmitter {
   { use_block_separator: false }
 }
 
 ///|
-pub fn ValidatorEmitter::emit_struct_validator(self : ValidatorEmitter, s : @ir.Struct) -> String {
+pub fn ValidatorEmitter::emit_struct_validator(
+  self : ValidatorEmitter,
+  s : @ir.Struct,
+) -> String {
   let buf = StringBuilder::new()
   self.emit_struct_validator_to(buf, s)
   buf.to_string()
 }
 
 ///|
-fn ValidatorEmitter::emit_struct_validator_to(self : ValidatorEmitter, buf : StringBuilder, s : @ir.Struct) -> Unit {
+fn ValidatorEmitter::emit_struct_validator_to(
+  self : ValidatorEmitter,
+  buf : StringBuilder,
+  s : @ir.Struct,
+) -> Unit {
   let has_validations = has_validatable_fields(s.fields)
   // Block separator
   if self.use_block_separator {
@@ -121,7 +130,14 @@ fn emit_field_validation(buf : StringBuilder, field : @ir.Field) -> Unit {
   match c.min_value {
     Some(val) =>
       if is_numeric {
-        emit_numeric_check(buf, name, is_optional, ">=", val, "at least " + val.to_string())
+        emit_numeric_check(
+          buf,
+          name,
+          is_optional,
+          ">=",
+          val,
+          "at least " + val.to_string(),
+        )
       }
     None => ()
   }
@@ -129,7 +145,14 @@ fn emit_field_validation(buf : StringBuilder, field : @ir.Field) -> Unit {
   match c.max_value {
     Some(val) =>
       if is_numeric {
-        emit_numeric_check(buf, name, is_optional, "<=", val, "at most " + val.to_string())
+        emit_numeric_check(
+          buf,
+          name,
+          is_optional,
+          "<=",
+          val,
+          "at most " + val.to_string(),
+        )
       }
     None => ()
   }
@@ -142,7 +165,7 @@ fn emit_length_check(
   is_optional : Bool,
   op : String,
   len : Int,
-  desc : String
+  desc : String,
 ) -> Unit {
   let neg_op = if op == ">=" { "<" } else { ">" }
   if is_optional {
@@ -190,7 +213,7 @@ fn emit_numeric_check(
   is_optional : Bool,
   op : String,
   val : Int64,
-  desc : String
+  desc : String,
 ) -> Unit {
   let neg_op = if op == ">=" { "<" } else { ">" }
   if is_optional {
@@ -241,7 +264,8 @@ fn is_numeric_type(ty : @ir.Type) -> Bool {
   match ty {
     @ir.Type::Primitive(name) =>
       match name {
-        "Int" | "Int64" | "UInt" | "UInt64" | "Float" | "Double" | "Byte" => true
+        "Int" | "Int64" | "UInt" | "UInt64" | "Float" | "Double" | "Byte" =>
+          true
         _ => false
       }
     @ir.Type::Optional(inner) => is_numeric_type(inner)
@@ -250,18 +274,20 @@ fn is_numeric_type(ty : @ir.Type) -> Bool {
 }
 
 ///|
-pub fn ValidatorEmitter::emit_module_validators(self : ValidatorEmitter, m : @ir.Module) -> String {
+pub fn ValidatorEmitter::emit_module_validators(
+  self : ValidatorEmitter,
+  m : @ir.Module,
+) -> String {
   let buf = StringBuilder::new()
   buf.write_string("// Generated validators\n\n")
   for item in m.items {
     match item {
-      @ir.TopLevel::Struct(s) => {
+      @ir.TopLevel::Struct(s) =>
         // Only generate validator if struct has validatable fields
         if has_validatable_fields(s.fields) {
           self.emit_struct_validator_to(buf, s)
           buf.write_string("\n")
         }
-      }
       _ => ()
     }
   }

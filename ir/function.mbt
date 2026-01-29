@@ -5,8 +5,8 @@
 pub struct Param {
   name : String
   ty : Type
-  label : String?       // labeled parameter ~label
-  default_value : String?  // default value expression
+  label : String? // labeled parameter ~label
+  default_value : String? // default value expression
 }
 
 ///|
@@ -29,13 +29,13 @@ pub struct Function {
   name : String
   params : Array[Param]
   return_type : Type
-  body : String?          // Function body as raw code string for now
+  body : String? // Function body as raw code string for now
   doc : String?
   visibility : Visibility
   type_params : Array[String]
   is_async : Bool
-  error_type : Type?      // for `raise Error`
-  receiver : (String, Type)?  // (self_name, self_type) for methods
+  error_type : Type? // for `raise Error`
+  receiver : (String, Type)? // (self_name, self_type) for methods
 }
 
 ///|
@@ -58,11 +58,14 @@ pub fn Function::new(name : String) -> Function {
 pub fn Function::with_param(self : Function, param : Param) -> Function {
   let params = self.params.copy()
   params.push(param)
-  { ..self, params }
+  { ..self, params, }
 }
 
 ///|
-pub fn Function::with_params(self : Function, params : Array[Param]) -> Function {
+pub fn Function::with_params(
+  self : Function,
+  params : Array[Param],
+) -> Function {
   let new_params = self.params.copy()
   for p in params {
     new_params.push(p)
@@ -93,7 +96,7 @@ pub fn Function::with_visibility(self : Function, vis : Visibility) -> Function 
 ///|
 pub fn Function::with_type_params(
   self : Function,
-  params : Array[String]
+  params : Array[String],
 ) -> Function {
   { ..self, type_params: params }
 }
@@ -112,7 +115,7 @@ pub fn Function::with_error(self : Function, error_type : Type) -> Function {
 pub fn Function::with_receiver(
   self : Function,
   name : String,
-  ty : Type
+  ty : Type,
 ) -> Function {
   { ..self, receiver: Some((name, ty)) }
 }

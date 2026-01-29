@@ -99,14 +99,14 @@ test "emit module" {
   let mod = @ir.Module::new()
     .add_struct(
       @ir.Struct::new("User")
-        .with_field(@ir.Field::new("id", @ir.Type::int64()))
-        .with_field(@ir.Field::new("name", @ir.Type::string())),
+      .with_field(@ir.Field::new("id", @ir.Type::int64()))
+      .with_field(@ir.Field::new("name", @ir.Type::string())),
     )
     .add_function(
       @ir.Function::new("create_user")
-        .with_param(@ir.Param::new("name", @ir.Type::string()))
-        .with_return(@ir.Type::named("User"))
-        .with_body("{ id: 1L, name }"),
+      .with_param(@ir.Param::new("name", @ir.Type::string()))
+      .with_return(@ir.Type::named("User"))
+      .with_body("{ id: 1L, name }"),
     )
   let emitter = MoonBitEmitter::new()
   let code = emitter.emit_module(mod)

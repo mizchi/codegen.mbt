@@ -3,7 +3,7 @@
 
 ///|
 pub struct MoonBitEmitter {
-  use_block_separator : Bool  // Use ///| block separators
+  use_block_separator : Bool // Use ///| block separators
 }
 
 ///|
@@ -12,12 +12,17 @@ pub fn MoonBitEmitter::new() -> MoonBitEmitter {
 }
 
 ///|
-pub fn MoonBitEmitter::without_separators(_self : MoonBitEmitter) -> MoonBitEmitter {
+pub fn MoonBitEmitter::without_separators(
+  _self : MoonBitEmitter,
+) -> MoonBitEmitter {
   { use_block_separator: false }
 }
 
 ///|
-pub fn MoonBitEmitter::emit_module(self : MoonBitEmitter, m : @ir.Module) -> String {
+pub fn MoonBitEmitter::emit_module(
+  self : MoonBitEmitter,
+  m : @ir.Module,
+) -> String {
   let buf = StringBuilder::new()
   // Imports
   for imp in m.imports {
@@ -58,7 +63,10 @@ pub fn MoonBitEmitter::emit_module(self : MoonBitEmitter, m : @ir.Module) -> Str
 }
 
 ///|
-pub fn MoonBitEmitter::emit_struct(self : MoonBitEmitter, s : @ir.Struct) -> String {
+pub fn MoonBitEmitter::emit_struct(
+  self : MoonBitEmitter,
+  s : @ir.Struct,
+) -> String {
   let buf = StringBuilder::new()
   self.emit_struct_to(buf, s)
   buf.to_string()
@@ -68,7 +76,7 @@ pub fn MoonBitEmitter::emit_struct(self : MoonBitEmitter, s : @ir.Struct) -> Str
 fn MoonBitEmitter::emit_struct_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  s : @ir.Struct
+  s : @ir.Struct,
 ) -> Unit {
   // Block separator
   if self.use_block_separator {
@@ -137,7 +145,7 @@ pub fn MoonBitEmitter::emit_enum(self : MoonBitEmitter, e : @ir.Enum) -> String 
 fn MoonBitEmitter::emit_enum_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  e : @ir.Enum
+  e : @ir.Enum,
 ) -> Unit {
   // Block separator
   if self.use_block_separator {
@@ -211,7 +219,7 @@ fn MoonBitEmitter::emit_enum_to(
 ///|
 pub fn MoonBitEmitter::emit_function(
   self : MoonBitEmitter,
-  f : @ir.Function
+  f : @ir.Function,
 ) -> String {
   let buf = StringBuilder::new()
   self.emit_function_to(buf, f)
@@ -222,7 +230,7 @@ pub fn MoonBitEmitter::emit_function(
 fn MoonBitEmitter::emit_function_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  f : @ir.Function
+  f : @ir.Function,
 ) -> Unit {
   // Block separator
   if self.use_block_separator {
@@ -337,7 +345,7 @@ fn MoonBitEmitter::emit_function_to(
 fn MoonBitEmitter::emit_const_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  c : @ir.ConstDecl
+  c : @ir.ConstDecl,
 ) -> Unit {
   if self.use_block_separator {
     buf.write_string("///|\n")
@@ -369,7 +377,7 @@ fn MoonBitEmitter::emit_const_to(
 fn MoonBitEmitter::emit_type_alias_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  t : @ir.TypeAlias
+  t : @ir.TypeAlias,
 ) -> Unit {
   if self.use_block_separator {
     buf.write_string("///|\n")
@@ -404,7 +412,7 @@ fn MoonBitEmitter::emit_type_alias_to(
 fn MoonBitEmitter::emit_trait_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  t : @ir.Trait
+  t : @ir.Trait,
 ) -> Unit {
   if self.use_block_separator {
     buf.write_string("///|\n")
@@ -467,7 +475,7 @@ fn MoonBitEmitter::emit_trait_to(
 fn MoonBitEmitter::emit_impl_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  impl_ : @ir.Impl
+  impl_ : @ir.Impl,
 ) -> Unit {
   if self.use_block_separator {
     buf.write_string("///|\n")
@@ -525,7 +533,10 @@ fn MoonBitEmitter::emit_impl_to(
 }
 
 ///|
-pub fn MoonBitEmitter::emit_type(self : MoonBitEmitter, ty : @ir.Type) -> String {
+pub fn MoonBitEmitter::emit_type(
+  self : MoonBitEmitter,
+  ty : @ir.Type,
+) -> String {
   let buf = StringBuilder::new()
   self.emit_type_to(buf, ty)
   buf.to_string()
@@ -535,7 +546,7 @@ pub fn MoonBitEmitter::emit_type(self : MoonBitEmitter, ty : @ir.Type) -> String
 fn MoonBitEmitter::emit_type_to(
   self : MoonBitEmitter,
   buf : StringBuilder,
-  ty : @ir.Type
+  ty : @ir.Type,
 ) -> Unit {
   match ty {
     @ir.Type::Primitive(name) => buf.write_string(name)
@@ -602,7 +613,7 @@ fn MoonBitEmitter::emit_type_to(
 fn MoonBitEmitter::emit_visibility_to(
   _self : MoonBitEmitter,
   buf : StringBuilder,
-  vis : @ir.Visibility
+  vis : @ir.Visibility,
 ) -> Unit {
   match vis {
     @ir.Visibility::Public => buf.write_string("pub ")

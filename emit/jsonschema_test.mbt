@@ -34,14 +34,14 @@ test "emit struct with constraints to json schema" {
   let s = @ir.Struct::new("CreateUserParams")
     .with_field(
       @ir.Field::new("name", @ir.Type::string())
-        .as_required()
-        .with_min_length(1)
-        .with_max_length(100),
+      .as_required()
+      .with_min_length(1)
+      .with_max_length(100),
     )
     .with_field(
       @ir.Field::new("age", @ir.Type::int64())
-        .as_unsigned()
-        .with_max_value(150L),
+      .as_unsigned()
+      .with_max_value(150L),
     )
   let emitter = JsonSchemaEmitter::new()
   let code = emitter.emit_struct(s)
