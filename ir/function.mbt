@@ -123,6 +123,9 @@ pub fn Function::with_receiver(
 }
 
 ///|
-pub fn Function::with_source_ref(self : Function, source : SourceRef) -> Function {
+pub fn Function::with_source_ref(
+  self : Function,
+  source : SourceRef,
+) -> Function {
   { ..self, source_ref: Some(source) }
 }

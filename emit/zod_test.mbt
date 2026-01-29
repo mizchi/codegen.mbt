@@ -7,9 +7,12 @@ test "zod: emit struct parser" {
     .with_field(@ir.Field::new("id", @ir.Type::int64()))
     .with_field(@ir.Field::new("name", @ir.Type::string()).as_required())
     .with_field(@ir.Field::new("email", @ir.Type::optional(@ir.Type::string())))
-
   let output = ZodEmitter::new().emit_struct_parser(user)
-  assert_true(output.contains("pub fn User::from_json(json : Json) -> Result[User, String]"))
+  assert_true(
+    output.contains(
+      "pub fn User::from_json(json : Json) -> Result[User, String]",
+    ),
+  )
   assert_true(output.contains("guard let Json::Object(obj) = json"))
   assert_true(output.contains("obj[\"id\"]"))
   assert_true(output.contains("obj[\"name\"]"))
@@ -22,7 +25,6 @@ test "zod: emit struct serializer" {
   let user = @ir.Struct::new("User")
     .with_field(@ir.Field::new("id", @ir.Type::int64()))
     .with_field(@ir.Field::new("name", @ir.Type::string()))
-
   let output = ZodEmitter::new().emit_struct_serializer(user)
   assert_true(output.contains("pub fn User::to_json(self : User) -> Json"))
   assert_true(output.contains("let obj : Map[String, Json] = {}"))
@@ -41,7 +43,6 @@ test "zod: emit struct with validation" {
       .with_max_length(100),
     )
     .with_field(@ir.Field::new("age", @ir.Type::int64()).as_unsigned())
-
   let output = ZodEmitter::new().emit_struct_parser(user)
   assert_true(output.contains("name cannot be empty"))
   assert_true(output.contains("name must be at least 1 characters"))
@@ -54,9 +55,12 @@ test "zod: emit simple enum parser" {
   let status = @ir.Enum::new("Status")
     .with_variant(@ir.Variant::new("Active"))
     .with_variant(@ir.Variant::new("Inactive"))
-
   let output = ZodEmitter::new().emit_enum_parser(status)
-  assert_true(output.contains("pub fn Status::from_json(json : Json) -> Result[Status, String]"))
+  assert_true(
+    output.contains(
+      "pub fn Status::from_json(json : Json) -> Result[Status, String]",
+    ),
+  )
   assert_true(output.contains("guard let Json::String(s) = json"))
   assert_true(output.contains("\"Active\" => Ok(Status::Active)"))
   assert_true(output.contains("\"Inactive\" => Ok(Status::Inactive)"))
@@ -67,7 +71,6 @@ test "zod: emit simple enum serializer" {
   let status = @ir.Enum::new("Status")
     .with_variant(@ir.Variant::new("Active"))
     .with_variant(@ir.Variant::new("Inactive"))
-
   let output = ZodEmitter::new().emit_enum_serializer(status)
   assert_true(output.contains("pub fn Status::to_json(self : Status) -> Json"))
   assert_true(output.contains("Status::Active => Json::String(\"Active\")"))
@@ -79,7 +82,6 @@ test "zod: emit tagged union enum" {
   let result = @ir.Enum::new("Result")
     .with_variant(@ir.Variant::new("Ok").with_tuple([@ir.Type::string()]))
     .with_variant(@ir.Variant::new("Err").with_tuple([@ir.Type::string()]))
-
   let output = ZodEmitter::new().emit_enum_parser(result)
   assert_true(output.contains("guard let Json::Object(obj) = json"))
   assert_true(output.contains("obj[\"type\"]"))
@@ -90,11 +92,21 @@ test "zod: emit tagged union enum" {
 ///|
 test "zod: emit helpers" {
   let output = ZodEmitter::new().emit_helpers()
-  assert_true(output.contains("fn parse_string(json : Json) -> Result[String, String]"))
-  assert_true(output.contains("fn parse_int(json : Json) -> Result[Int, String]"))
-  assert_true(output.contains("fn parse_int64(json : Json) -> Result[Int64, String]"))
-  assert_true(output.contains("fn parse_double(json : Json) -> Result[Double, String]"))
-  assert_true(output.contains("fn parse_bool(json : Json) -> Result[Bool, String]"))
+  assert_true(
+    output.contains("fn parse_string(json : Json) -> Result[String, String]"),
+  )
+  assert_true(
+    output.contains("fn parse_int(json : Json) -> Result[Int, String]"),
+  )
+  assert_true(
+    output.contains("fn parse_int64(json : Json) -> Result[Int64, String]"),
+  )
+  assert_true(
+    output.contains("fn parse_double(json : Json) -> Result[Double, String]"),
+  )
+  assert_true(
+    output.contains("fn parse_bool(json : Json) -> Result[Bool, String]"),
+  )
   assert_true(output.contains("fn parse_array"))
   assert_true(output.contains("fn parse_map"))
 }
@@ -112,7 +124,6 @@ test "zod: emit module" {
       .with_variant(@ir.Variant::new("Active"))
       .with_variant(@ir.Variant::new("Inactive")),
     )
-
   let output = ZodEmitter::new().emit_module(mod)
   // Should have helpers
   assert_true(output.contains("fn parse_string"))
@@ -126,18 +137,18 @@ test "zod: emit module" {
 
 ///|
 test "zod: array field" {
-  let user = @ir.Struct::new("User")
-    .with_field(@ir.Field::new("tags", @ir.Type::array(@ir.Type::string())))
-
+  let user = @ir.Struct::new("User").with_field(
+    @ir.Field::new("tags", @ir.Type::array(@ir.Type::string())),
+  )
   let output = ZodEmitter::new().emit_struct_parser(user)
   assert_true(output.contains("parse_array"))
 }
 
 ///|
 test "zod: nested struct field" {
-  let post = @ir.Struct::new("Post")
-    .with_field(@ir.Field::new("author", @ir.Type::named("User")))
-
+  let post = @ir.Struct::new("Post").with_field(
+    @ir.Field::new("author", @ir.Type::named("User")),
+  )
   let output = ZodEmitter::new().emit_struct_parser(post)
   assert_true(output.contains("User::from_json"))
 }
@@ -211,10 +222,7 @@ test "snapshot: struct parser with validation" {
       .with_min_length(1)
       .with_max_length(50),
     )
-    .with_field(
-      @ir.Field::new("age", @ir.Type::int64())
-      .as_unsigned(),
-    )
+    .with_field(@ir.Field::new("age", @ir.Type::int64()).as_unsigned())
   let code = ZodEmitter::new().emit_struct_parser(user)
   let expected =
     #|///|
@@ -265,8 +273,9 @@ test "snapshot: struct parser with validation" {
 
 ///|
 test "snapshot: struct with optional field" {
-  let user = @ir.Struct::new("UpdateUserInput")
-    .with_field(@ir.Field::new("name", @ir.Type::optional(@ir.Type::string())))
+  let user = @ir.Struct::new("UpdateUserInput").with_field(
+    @ir.Field::new("name", @ir.Type::optional(@ir.Type::string())),
+  )
   let code = ZodEmitter::new().emit_struct_parser(user)
   let expected =
     #|///|
@@ -361,8 +370,9 @@ test "snapshot: struct serializer with optional" {
 
 ///|
 test "snapshot: struct with array field" {
-  let user = @ir.Struct::new("User")
-    .with_field(@ir.Field::new("tags", @ir.Type::array(@ir.Type::string())))
+  let user = @ir.Struct::new("User").with_field(
+    @ir.Field::new("tags", @ir.Type::array(@ir.Type::string())),
+  )
   let code = ZodEmitter::new().emit_struct_parser(user)
   let expected =
     #|///|
@@ -390,8 +400,9 @@ test "snapshot: struct with array field" {
 
 ///|
 test "snapshot: struct serializer with array" {
-  let user = @ir.Struct::new("User")
-    .with_field(@ir.Field::new("tags", @ir.Type::array(@ir.Type::string())))
+  let user = @ir.Struct::new("User").with_field(
+    @ir.Field::new("tags", @ir.Type::array(@ir.Type::string())),
+  )
   let code = ZodEmitter::new().emit_struct_serializer(user)
   let expected =
     #|///|
@@ -404,4 +415,3 @@ test "snapshot: struct serializer with array" {
     #|
   inspect(code, content=expected)
 }
-

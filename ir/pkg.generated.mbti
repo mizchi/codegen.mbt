@@ -1,0 +1,296 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/codegen/ir"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct ConstDecl {
+  name : String
+  ty : Type?
+  value : String
+  doc : String?
+  visibility : Visibility
+  source_ref : SourceRef?
+}
+pub fn ConstDecl::new(String, String) -> Self
+pub fn ConstDecl::with_doc(Self, String) -> Self
+pub fn ConstDecl::with_source_ref(Self, SourceRef) -> Self
+pub fn ConstDecl::with_type(Self, Type) -> Self
+pub fn ConstDecl::with_visibility(Self, Visibility) -> Self
+
+pub struct Constraints {
+  required : Bool
+  min_length : Int?
+  max_length : Int?
+  min_value : Int64?
+  max_value : Int64?
+  pattern : String?
+  unsigned : Bool
+  custom : Array[String]
+}
+pub fn Constraints::as_required(Self) -> Self
+pub fn Constraints::as_unsigned(Self) -> Self
+pub fn Constraints::is_empty(Self) -> Bool
+pub fn Constraints::new() -> Self
+pub fn Constraints::with_custom(Self, String) -> Self
+pub fn Constraints::with_max_length(Self, Int) -> Self
+pub fn Constraints::with_max_value(Self, Int64) -> Self
+pub fn Constraints::with_min_length(Self, Int) -> Self
+pub fn Constraints::with_min_value(Self, Int64) -> Self
+pub fn Constraints::with_pattern(Self, String) -> Self
+
+pub struct Enum {
+  name : String
+  variants : Array[Variant]
+  doc : String?
+  visibility : Visibility
+  type_params : Array[String]
+  derives : Array[String]
+  source_ref : SourceRef?
+}
+pub fn Enum::new(String) -> Self
+pub fn Enum::with_derives(Self, Array[String]) -> Self
+pub fn Enum::with_doc(Self, String) -> Self
+pub fn Enum::with_source_ref(Self, SourceRef) -> Self
+pub fn Enum::with_type_params(Self, Array[String]) -> Self
+pub fn Enum::with_variant(Self, Variant) -> Self
+pub fn Enum::with_variants(Self, Array[Variant]) -> Self
+pub fn Enum::with_visibility(Self, Visibility) -> Self
+
+pub struct Field {
+  name : String
+  ty : Type
+  doc : String?
+  default_value : String?
+  is_mutable : Bool
+  constraints : Constraints
+  source_ref : SourceRef?
+}
+pub fn Field::as_mutable(Self) -> Self
+pub fn Field::as_required(Self) -> Self
+pub fn Field::as_unsigned(Self) -> Self
+pub fn Field::new(String, Type) -> Self
+pub fn Field::with_constraints(Self, Constraints) -> Self
+pub fn Field::with_default(Self, String) -> Self
+pub fn Field::with_doc(Self, String) -> Self
+pub fn Field::with_max_length(Self, Int) -> Self
+pub fn Field::with_max_value(Self, Int64) -> Self
+pub fn Field::with_min_length(Self, Int) -> Self
+pub fn Field::with_min_value(Self, Int64) -> Self
+pub fn Field::with_pattern(Self, String) -> Self
+pub fn Field::with_source_ref(Self, SourceRef) -> Self
+
+pub struct Function {
+  name : String
+  params : Array[Param]
+  return_type : Type
+  body : String?
+  doc : String?
+  visibility : Visibility
+  type_params : Array[String]
+  is_async : Bool
+  error_type : Type?
+  receiver : (String, Type)?
+  source_ref : SourceRef?
+}
+pub fn Function::as_async(Self) -> Self
+pub fn Function::new(String) -> Self
+pub fn Function::with_body(Self, String) -> Self
+pub fn Function::with_doc(Self, String) -> Self
+pub fn Function::with_error(Self, Type) -> Self
+pub fn Function::with_param(Self, Param) -> Self
+pub fn Function::with_params(Self, Array[Param]) -> Self
+pub fn Function::with_receiver(Self, String, Type) -> Self
+pub fn Function::with_return(Self, Type) -> Self
+pub fn Function::with_source_ref(Self, SourceRef) -> Self
+pub fn Function::with_type_params(Self, Array[String]) -> Self
+pub fn Function::with_visibility(Self, Visibility) -> Self
+
+pub struct Impl {
+  trait_name : String?
+  type_name : String
+  methods : Array[Function]
+  type_params : Array[String]
+  source_ref : SourceRef?
+}
+pub fn Impl::for_trait(Self, String) -> Self
+pub fn Impl::new(String) -> Self
+pub fn Impl::with_method(Self, Function) -> Self
+pub fn Impl::with_source_ref(Self, SourceRef) -> Self
+
+pub struct Import {
+  path : String
+  as_name : String?
+}
+pub fn Import::new(String) -> Self
+pub fn Import::with_alias(Self, String) -> Self
+
+pub struct Module {
+  name : String?
+  items : Array[TopLevel]
+  imports : Array[Import]
+  source_ref : SourceRef?
+}
+pub fn Module::add(Self, TopLevel) -> Self
+pub fn Module::add_const(Self, ConstDecl) -> Self
+pub fn Module::add_enum(Self, Enum) -> Self
+pub fn Module::add_function(Self, Function) -> Self
+pub fn Module::add_impl(Self, Impl) -> Self
+pub fn Module::add_struct(Self, Struct) -> Self
+pub fn Module::add_trait(Self, Trait) -> Self
+pub fn Module::add_type_alias(Self, TypeAlias) -> Self
+pub fn Module::new() -> Self
+pub fn Module::with_import(Self, String) -> Self
+pub fn Module::with_import_as(Self, String, String) -> Self
+pub fn Module::with_name(Self, String) -> Self
+pub fn Module::with_source_ref(Self, SourceRef) -> Self
+
+pub struct Param {
+  name : String
+  ty : Type
+  label : String?
+  default_value : String?
+}
+pub fn Param::new(String, Type) -> Self
+pub fn Param::with_default(Self, String) -> Self
+pub fn Param::with_label(Self, String) -> Self
+
+pub struct SourceRef {
+  id : String
+  file : String?
+  line : Int?
+  context : String?
+}
+pub fn SourceRef::new(String) -> Self
+pub fn SourceRef::to_comment(Self) -> String
+pub fn SourceRef::with_context(Self, String) -> Self
+pub fn SourceRef::with_file(Self, String) -> Self
+pub fn SourceRef::with_line(Self, Int) -> Self
+
+pub struct Struct {
+  name : String
+  fields : Array[Field]
+  doc : String?
+  visibility : Visibility
+  type_params : Array[String]
+  derives : Array[String]
+  source_ref : SourceRef?
+}
+pub fn Struct::new(String) -> Self
+pub fn Struct::with_derives(Self, Array[String]) -> Self
+pub fn Struct::with_doc(Self, String) -> Self
+pub fn Struct::with_field(Self, Field) -> Self
+pub fn Struct::with_fields(Self, Array[Field]) -> Self
+pub fn Struct::with_source_ref(Self, SourceRef) -> Self
+pub fn Struct::with_type_params(Self, Array[String]) -> Self
+pub fn Struct::with_visibility(Self, Visibility) -> Self
+
+pub enum TopLevel {
+  Struct(Struct)
+  Enum(Enum)
+  Function(Function)
+  Const(ConstDecl)
+  TypeAlias(TypeAlias)
+  Trait(Trait)
+  Impl(Impl)
+}
+pub fn TopLevel::const_(ConstDecl) -> Self
+pub fn TopLevel::enum_(Enum) -> Self
+pub fn TopLevel::function(Function) -> Self
+pub fn TopLevel::impl_(Impl) -> Self
+pub fn TopLevel::struct_(Struct) -> Self
+pub fn TopLevel::trait_(Trait) -> Self
+pub fn TopLevel::type_alias(TypeAlias) -> Self
+
+pub struct Trait {
+  name : String
+  methods : Array[Function]
+  doc : String?
+  visibility : Visibility
+  type_params : Array[String]
+  super_traits : Array[String]
+  source_ref : SourceRef?
+}
+pub fn Trait::new(String) -> Self
+pub fn Trait::with_doc(Self, String) -> Self
+pub fn Trait::with_method(Self, Function) -> Self
+pub fn Trait::with_source_ref(Self, SourceRef) -> Self
+pub fn Trait::with_super(Self, String) -> Self
+
+pub enum Type {
+  Primitive(String)
+  Optional(Type)
+  Array(Type)
+  Map(Type, Type)
+  Named(String, Array[Type])
+  Function(Array[Type], Type)
+  Tuple(Array[Type])
+  Error(Type)
+}
+pub fn Type::array(Self) -> Self
+pub fn Type::bool() -> Self
+pub fn Type::bytes() -> Self
+pub fn Type::double() -> Self
+pub fn Type::error(Self) -> Self
+pub fn Type::function(Array[Self], Self) -> Self
+pub fn Type::int() -> Self
+pub fn Type::int64() -> Self
+pub fn Type::map(Self, Self) -> Self
+pub fn Type::named(String) -> Self
+pub fn Type::named_with(String, Array[Self]) -> Self
+pub fn Type::optional(Self) -> Self
+pub fn Type::string() -> Self
+pub fn Type::tuple(Array[Self]) -> Self
+pub fn Type::uint() -> Self
+pub fn Type::uint64() -> Self
+pub fn Type::unit() -> Self
+
+pub struct TypeAlias {
+  name : String
+  target : Type
+  doc : String?
+  visibility : Visibility
+  type_params : Array[String]
+  source_ref : SourceRef?
+}
+pub fn TypeAlias::new(String, Type) -> Self
+pub fn TypeAlias::with_doc(Self, String) -> Self
+pub fn TypeAlias::with_source_ref(Self, SourceRef) -> Self
+pub fn TypeAlias::with_type_params(Self, Array[String]) -> Self
+pub fn TypeAlias::with_visibility(Self, Visibility) -> Self
+
+pub struct Variant {
+  name : String
+  payload : VariantPayload
+  doc : String?
+  source_ref : SourceRef?
+}
+pub fn Variant::new(String) -> Self
+pub fn Variant::with_doc(Self, String) -> Self
+pub fn Variant::with_source_ref(Self, SourceRef) -> Self
+pub fn Variant::with_struct(Self, Array[Field]) -> Self
+pub fn Variant::with_tuple(Self, Array[Type]) -> Self
+
+pub enum VariantPayload {
+  None
+  Tuple(Array[Type])
+  Struct(Array[Field])
+}
+
+pub enum Visibility {
+  Public
+  Private
+  ReadOnly
+  Package(String)
+}
+pub fn Visibility::pkg(String) -> Self
+pub fn Visibility::private() -> Self
+pub fn Visibility::public() -> Self
+pub fn Visibility::read_only() -> Self
+
+// Type aliases
+
+// Traits
+

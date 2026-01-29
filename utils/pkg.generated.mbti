@@ -1,0 +1,24 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/codegen/utils"
+
+// Values
+pub fn escape_multiline(String) -> String
+
+pub fn escape_string(String) -> String
+
+pub fn indent(String, Int) -> String
+
+pub fn to_camel_case(String) -> String
+
+pub fn to_pascal_case(String) -> String
+
+pub fn to_snake_case(String) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

@@ -184,7 +184,7 @@ fn TsEmitter::emit_discriminated_union_to(
     // Payload fields
     match v.payload {
       @ir.VariantPayload::None => ()
-      @ir.VariantPayload::Tuple(types) => {
+      @ir.VariantPayload::Tuple(types) =>
         for i, ty in types {
           self.write_indent(buf, 1)
           buf.write_string("readonly value")
@@ -193,8 +193,7 @@ fn TsEmitter::emit_discriminated_union_to(
           self.emit_type_to(buf, ty)
           buf.write_string(";\n")
         }
-      }
-      @ir.VariantPayload::Struct(fields) => {
+      @ir.VariantPayload::Struct(fields) =>
         for field in fields {
           self.write_indent(buf, 1)
           buf.write_string("readonly ")
@@ -203,7 +202,6 @@ fn TsEmitter::emit_discriminated_union_to(
           self.emit_type_to(buf, field.ty)
           buf.write_string(";\n")
         }
-      }
     }
     buf.write_string("}\n\n")
   }
@@ -270,7 +268,7 @@ fn TsEmitter::emit_type_to(
       self.emit_type_to(buf, inner)
       buf.write_string("[]")
     }
-    @ir.Type::Map(key, value) => {
+    @ir.Type::Map(key, value) =>
       match key {
         @ir.Type::Primitive("String") => {
           buf.write_string("Record<string, ")
@@ -290,7 +288,6 @@ fn TsEmitter::emit_type_to(
           buf.write_string(">")
         }
       }
-    }
     @ir.Type::Named(name, args) =>
       if args.is_empty() {
         buf.write_string(name)
@@ -425,7 +422,8 @@ fn TsEmitter::emit_const_to(
 fn primitive_to_ts(name : String) -> String {
   match name {
     "Bool" => "boolean"
-    "Byte" | "Int" | "Int64" | "UInt" | "UInt64" | "Float" | "Double" => "number"
+    "Byte" | "Int" | "Int64" | "UInt" | "UInt64" | "Float" | "Double" =>
+      "number"
     "String" => "string"
     "Bytes" => "Uint8Array"
     "Unit" => "void"

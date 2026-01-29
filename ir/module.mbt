@@ -81,7 +81,10 @@ pub fn ConstDecl::with_visibility(
 }
 
 ///|
-pub fn ConstDecl::with_source_ref(self : ConstDecl, source : SourceRef) -> ConstDecl {
+pub fn ConstDecl::with_source_ref(
+  self : ConstDecl,
+  source : SourceRef,
+) -> ConstDecl {
   { ..self, source_ref: Some(source) }
 }
 
@@ -97,7 +100,14 @@ pub struct TypeAlias {
 
 ///|
 pub fn TypeAlias::new(name : String, target : Type) -> TypeAlias {
-  { name, target, doc: None, visibility: Public, type_params: [], source_ref: None }
+  {
+    name,
+    target,
+    doc: None,
+    visibility: Public,
+    type_params: [],
+    source_ref: None,
+  }
 }
 
 ///|
@@ -122,7 +132,10 @@ pub fn TypeAlias::with_type_params(
 }
 
 ///|
-pub fn TypeAlias::with_source_ref(self : TypeAlias, source : SourceRef) -> TypeAlias {
+pub fn TypeAlias::with_source_ref(
+  self : TypeAlias,
+  source : SourceRef,
+) -> TypeAlias {
   { ..self, source_ref: Some(source) }
 }
 
@@ -185,7 +198,13 @@ pub struct Impl {
 
 ///|
 pub fn Impl::new(type_name : String) -> Impl {
-  { trait_name: None, type_name, methods: [], type_params: [], source_ref: None }
+  {
+    trait_name: None,
+    type_name,
+    methods: [],
+    type_params: [],
+    source_ref: None,
+  }
 }
 
 ///|

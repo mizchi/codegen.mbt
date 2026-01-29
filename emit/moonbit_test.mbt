@@ -128,7 +128,9 @@ test "emit module" {
 ///|
 test "emit struct with source ref" {
   let s = @ir.Struct::new("User")
-    .with_source_ref(@ir.SourceRef::new("UserSchema").with_file("schema.json").with_line(15))
+    .with_source_ref(
+      @ir.SourceRef::new("UserSchema").with_file("schema.json").with_line(15),
+    )
     .with_field(@ir.Field::new("id", @ir.Type::int64()))
     .with_field(@ir.Field::new("name", @ir.Type::string()))
   let emitter = MoonBitEmitter::new().with_source_refs()
@@ -140,7 +142,9 @@ test "emit struct with source ref" {
 ///|
 test "emit enum with source ref" {
   let e = @ir.Enum::new("Status")
-    .with_source_ref(@ir.SourceRef::new("StatusEnum").with_context("from OpenAPI"))
+    .with_source_ref(
+      @ir.SourceRef::new("StatusEnum").with_context("from OpenAPI"),
+    )
     .with_variant(@ir.Variant::new("Active"))
     .with_variant(@ir.Variant::new("Inactive"))
   let emitter = MoonBitEmitter::new().with_source_refs()

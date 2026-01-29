@@ -183,9 +183,7 @@ fn ZodEmitter::emit_json_extractor(
       self.emit_json_extractor(buf, value, "item")
       buf.write_string(" })")
     }
-    _ => {
-      buf.write_string("Err(\"Unsupported type\")")
-    }
+    _ => buf.write_string("Err(\"Unsupported type\")")
   }
 }
 
@@ -680,7 +678,9 @@ fn ZodEmitter::emit_enum_parser_to(
     buf.write_string(e.name)
     buf.write_string("\")\n")
     buf.write_string("  }\n")
-    buf.write_string("  guard let Some(Json::String(tag)) = obj[\"type\"] else {\n")
+    buf.write_string(
+      "  guard let Some(Json::String(tag)) = obj[\"type\"] else {\n",
+    )
     buf.write_string("    return Err(\"Missing type field\")\n")
     buf.write_string("  }\n")
     buf.write_string("  match tag {\n")

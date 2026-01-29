@@ -20,7 +20,9 @@ pub fn MoonBitEmitter::without_separators(
 }
 
 ///|
-pub fn MoonBitEmitter::with_source_refs(self : MoonBitEmitter) -> MoonBitEmitter {
+pub fn MoonBitEmitter::with_source_refs(
+  self : MoonBitEmitter,
+) -> MoonBitEmitter {
   { ..self, emit_source_refs: true }
 }
 

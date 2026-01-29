@@ -1,0 +1,99 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/codegen/builder"
+
+import {
+  "mizchi/codegen/ir",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct EnumBuilder {
+  name : String
+  variants : Array[@ir.Variant]
+  mut doc : String?
+  mut visibility : @ir.Visibility
+  type_params : Array[String]
+  derives_list : Array[String]
+}
+pub fn EnumBuilder::add_derive(Self, String) -> Self
+pub fn EnumBuilder::add_type_param(Self, String) -> Self
+pub fn EnumBuilder::add_variant(Self, String) -> Self
+pub fn EnumBuilder::add_variant_struct(Self, String, Array[@ir.Field]) -> Self
+pub fn EnumBuilder::add_variant_tuple(Self, String, Array[@ir.Type]) -> Self
+pub fn EnumBuilder::add_variant_with(Self, @ir.Variant) -> Self
+pub fn EnumBuilder::build(Self) -> @ir.Enum
+pub fn EnumBuilder::new(String) -> Self
+pub fn EnumBuilder::with_doc(Self, String) -> Self
+pub fn EnumBuilder::with_visibility(Self, @ir.Visibility) -> Self
+
+pub struct FunctionBuilder {
+  name : String
+  params : Array[@ir.Param]
+  mut return_type : @ir.Type
+  mut body : String?
+  mut doc : String?
+  mut visibility : @ir.Visibility
+  type_params : Array[String]
+  mut is_async : Bool
+  mut error_type : @ir.Type?
+  mut receiver : (String, @ir.Type)?
+}
+pub fn FunctionBuilder::add_labeled_param(Self, String, @ir.Type, String) -> Self
+pub fn FunctionBuilder::add_optional_param(Self, String, @ir.Type, String) -> Self
+pub fn FunctionBuilder::add_param(Self, String, @ir.Type) -> Self
+pub fn FunctionBuilder::add_param_with(Self, @ir.Param) -> Self
+pub fn FunctionBuilder::add_type_param(Self, String) -> Self
+pub fn FunctionBuilder::as_async(Self) -> Self
+pub fn FunctionBuilder::build(Self) -> @ir.Function
+pub fn FunctionBuilder::new(String) -> Self
+pub fn FunctionBuilder::with_body(Self, String) -> Self
+pub fn FunctionBuilder::with_doc(Self, String) -> Self
+pub fn FunctionBuilder::with_raises(Self, @ir.Type) -> Self
+pub fn FunctionBuilder::with_receiver(Self, String, @ir.Type) -> Self
+pub fn FunctionBuilder::with_return(Self, @ir.Type) -> Self
+pub fn FunctionBuilder::with_visibility(Self, @ir.Visibility) -> Self
+
+pub struct ModuleBuilder {
+  mut name : String?
+  items : Array[@ir.TopLevel]
+  imports : Array[@ir.Import]
+}
+pub fn ModuleBuilder::add_const(Self, @ir.ConstDecl) -> Self
+pub fn ModuleBuilder::add_enum(Self, @ir.Enum) -> Self
+pub fn ModuleBuilder::add_function(Self, @ir.Function) -> Self
+pub fn ModuleBuilder::add_impl(Self, @ir.Impl) -> Self
+pub fn ModuleBuilder::add_import(Self, String) -> Self
+pub fn ModuleBuilder::add_import_as(Self, String, String) -> Self
+pub fn ModuleBuilder::add_struct(Self, @ir.Struct) -> Self
+pub fn ModuleBuilder::add_trait(Self, @ir.Trait) -> Self
+pub fn ModuleBuilder::add_type_alias(Self, @ir.TypeAlias) -> Self
+pub fn ModuleBuilder::build(Self) -> @ir.Module
+pub fn ModuleBuilder::new() -> Self
+pub fn ModuleBuilder::with_name(Self, String) -> Self
+
+pub struct StructBuilder {
+  name : String
+  fields : Array[@ir.Field]
+  mut doc : String?
+  mut visibility : @ir.Visibility
+  type_params : Array[String]
+  derives_list : Array[String]
+}
+pub fn StructBuilder::add_derive(Self, String) -> Self
+pub fn StructBuilder::add_field(Self, String, @ir.Type) -> Self
+pub fn StructBuilder::add_field_with(Self, @ir.Field) -> Self
+pub fn StructBuilder::add_mutable_field(Self, String, @ir.Type) -> Self
+pub fn StructBuilder::add_optional_field(Self, String, @ir.Type) -> Self
+pub fn StructBuilder::add_type_param(Self, String) -> Self
+pub fn StructBuilder::build(Self) -> @ir.Struct
+pub fn StructBuilder::new(String) -> Self
+pub fn StructBuilder::with_doc(Self, String) -> Self
+pub fn StructBuilder::with_visibility(Self, @ir.Visibility) -> Self
+
+// Type aliases
+
+// Traits
+

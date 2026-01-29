@@ -104,9 +104,7 @@ test "emit struct validator with no constraints" {
 test "snapshot: comprehensive validator with multiple constraints" {
   let user = @ir.Struct::new("User")
     .with_field(
-      @ir.Field::new("id", @ir.Type::int64())
-      .as_unsigned()
-      .with_min_value(1L),
+      @ir.Field::new("id", @ir.Type::int64()).as_unsigned().with_min_value(1L),
     )
     .with_field(
       @ir.Field::new("name", @ir.Type::string())
@@ -115,8 +113,9 @@ test "snapshot: comprehensive validator with multiple constraints" {
       .with_max_length(100),
     )
     .with_field(
-      @ir.Field::new("email", @ir.Type::optional(@ir.Type::string()))
-      .with_max_length(255),
+      @ir.Field::new("email", @ir.Type::optional(@ir.Type::string())).with_max_length(
+        255,
+      ),
     )
     .with_field(
       @ir.Field::new("age", @ir.Type::int64())
@@ -167,11 +166,9 @@ test "snapshot: comprehensive validator with multiple constraints" {
 
 ///|
 test "snapshot: validator with min_length only" {
-  let params = @ir.Struct::new("SearchParams")
-    .with_field(
-      @ir.Field::new("query", @ir.Type::string())
-      .with_min_length(3),
-    )
+  let params = @ir.Struct::new("SearchParams").with_field(
+    @ir.Field::new("query", @ir.Type::string()).with_min_length(3),
+  )
   let code = ValidatorEmitter::new().emit_struct_validator(params)
   let expected =
     #|///|
@@ -194,10 +191,7 @@ test "snapshot: validator with numeric range" {
       .with_min_value(1L)
       .with_max_value(65535L),
     )
-    .with_field(
-      @ir.Field::new("timeout", @ir.Type::int64())
-      .as_unsigned(),
-    )
+    .with_field(@ir.Field::new("timeout", @ir.Type::int64()).as_unsigned())
   let code = ValidatorEmitter::new().emit_struct_validator(config)
   let expected =
     #|///|

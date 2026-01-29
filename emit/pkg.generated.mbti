@@ -1,0 +1,106 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/codegen/emit"
+
+import {
+  "mizchi/codegen/ir",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct FbsEmitter {
+  indent_size : Int
+  use_tables : Bool
+}
+pub fn FbsEmitter::emit_enum(Self, @ir.Enum) -> String
+pub fn FbsEmitter::emit_module(Self, @ir.Module) -> String
+pub fn FbsEmitter::emit_struct(Self, @ir.Struct) -> String
+pub fn FbsEmitter::new() -> Self
+pub fn FbsEmitter::with_structs(Self) -> Self
+
+pub struct JsonSchemaEmitter {
+  indent_size : Int
+  schema_draft : String
+}
+pub fn JsonSchemaEmitter::emit_enum(Self, @ir.Enum) -> String
+pub fn JsonSchemaEmitter::emit_struct(Self, @ir.Struct) -> String
+pub fn JsonSchemaEmitter::new() -> Self
+pub fn JsonSchemaEmitter::with_draft(Self, String) -> Self
+pub fn JsonSchemaEmitter::with_indent(Self, Int) -> Self
+
+pub struct MoonBitEmitter {
+  use_block_separator : Bool
+  emit_source_refs : Bool
+}
+pub fn MoonBitEmitter::emit_enum(Self, @ir.Enum) -> String
+pub fn MoonBitEmitter::emit_function(Self, @ir.Function) -> String
+pub fn MoonBitEmitter::emit_module(Self, @ir.Module) -> String
+pub fn MoonBitEmitter::emit_struct(Self, @ir.Struct) -> String
+pub fn MoonBitEmitter::emit_type(Self, @ir.Type) -> String
+pub fn MoonBitEmitter::new() -> Self
+pub fn MoonBitEmitter::with_source_refs(Self) -> Self
+pub fn MoonBitEmitter::without_separators(Self) -> Self
+
+pub struct ProtoEmitter {
+  indent_size : Int
+  proto_version : String
+}
+pub fn ProtoEmitter::emit_enum(Self, @ir.Enum) -> String
+pub fn ProtoEmitter::emit_module(Self, @ir.Module) -> String
+pub fn ProtoEmitter::emit_struct(Self, @ir.Struct) -> String
+pub fn ProtoEmitter::new() -> Self
+pub fn ProtoEmitter::proto2(Self) -> Self
+
+pub struct RustEmitter {
+  indent_size : Int
+  use_serde : Bool
+  use_pub : Bool
+}
+pub fn RustEmitter::emit_enum(Self, @ir.Enum) -> String
+pub fn RustEmitter::emit_module(Self, @ir.Module) -> String
+pub fn RustEmitter::emit_struct(Self, @ir.Struct) -> String
+pub fn RustEmitter::emit_type(Self, @ir.Type) -> String
+pub fn RustEmitter::new() -> Self
+pub fn RustEmitter::with_private_fields(Self) -> Self
+pub fn RustEmitter::without_serde(Self) -> Self
+
+pub struct TsEmitter {
+  indent_size : Int
+  use_readonly : Bool
+  export_all : Bool
+}
+pub fn TsEmitter::emit_enum(Self, @ir.Enum) -> String
+pub fn TsEmitter::emit_module(Self, @ir.Module) -> String
+pub fn TsEmitter::emit_struct(Self, @ir.Struct) -> String
+pub fn TsEmitter::emit_type(Self, @ir.Type) -> String
+pub fn TsEmitter::new() -> Self
+pub fn TsEmitter::without_exports(Self) -> Self
+pub fn TsEmitter::without_readonly(Self) -> Self
+
+pub struct ValidatorEmitter {
+  use_block_separator : Bool
+}
+pub fn ValidatorEmitter::emit_module_validators(Self, @ir.Module) -> String
+pub fn ValidatorEmitter::emit_struct_validator(Self, @ir.Struct) -> String
+pub fn ValidatorEmitter::new() -> Self
+pub fn ValidatorEmitter::without_separators(Self) -> Self
+
+pub struct ZodEmitter {
+  use_block_separator : Bool
+}
+pub fn ZodEmitter::emit_enum_parser(Self, @ir.Enum) -> String
+pub fn ZodEmitter::emit_enum_serializer(Self, @ir.Enum) -> String
+pub fn ZodEmitter::emit_helpers(Self) -> String
+pub fn ZodEmitter::emit_module(Self, @ir.Module) -> String
+pub fn ZodEmitter::emit_struct(Self, @ir.Struct) -> String
+pub fn ZodEmitter::emit_struct_parser(Self, @ir.Struct) -> String
+pub fn ZodEmitter::emit_struct_serializer(Self, @ir.Struct) -> String
+pub fn ZodEmitter::new() -> Self
+pub fn ZodEmitter::without_separators(Self) -> Self
+
+// Type aliases
+
+// Traits
+
