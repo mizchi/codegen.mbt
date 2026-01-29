@@ -12,8 +12,8 @@ pub fn MoonBitEmitter::new() -> MoonBitEmitter {
 }
 
 ///|
-pub fn MoonBitEmitter::without_separators(self : MoonBitEmitter) -> MoonBitEmitter {
-  { ..self, use_block_separator: false }
+pub fn MoonBitEmitter::without_separators(_self : MoonBitEmitter) -> MoonBitEmitter {
+  { use_block_separator: false }
 }
 
 ///|
@@ -22,11 +22,11 @@ pub fn MoonBitEmitter::emit_module(self : MoonBitEmitter, m : @ir.Module) -> Str
   // Imports
   for imp in m.imports {
     match imp.as_name {
-      Some(alias) => {
+      Some(as_name) => {
         buf.write_string("import ")
         buf.write_string(imp.path)
         buf.write_string(" as ")
-        buf.write_string(alias)
+        buf.write_string(as_name)
         buf.write_string("\n")
       }
       None => {
@@ -258,7 +258,7 @@ fn MoonBitEmitter::emit_function_to(
   buf.write_string(" ")
   // Receiver (method)
   match f.receiver {
-    Some((name, ty)) => {
+    Some((_name, ty)) => {
       self.emit_type_to(buf, ty)
       buf.write_string("::")
     }
@@ -279,7 +279,7 @@ fn MoonBitEmitter::emit_function_to(
     None => ()
   }
   // Parameters
-  for i, param in f.params {
+  for _i, param in f.params {
     if param_idx > 0 {
       buf.write_string(", ")
     }
@@ -600,7 +600,7 @@ fn MoonBitEmitter::emit_type_to(
 
 ///|
 fn MoonBitEmitter::emit_visibility_to(
-  self : MoonBitEmitter,
+  _self : MoonBitEmitter,
   buf : StringBuilder,
   vis : @ir.Visibility
 ) -> Unit {

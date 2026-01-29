@@ -6,18 +6,15 @@ test "emit simple struct" {
     .with_field(@ir.Field::new("email", @ir.Type::optional(@ir.Type::string())))
   let emitter = MoonBitEmitter::new()
   let code = emitter.emit_struct(s)
-  inspect(
-    code,
-    content=
-      #|///|
-      #|pub struct User {
-      #|  id : Int64
-      #|  name : String
-      #|  email : String?
-      #|}
-      #|
-    ,
-  )
+  let expected =
+    #|///|
+    #|pub struct User {
+    #|  id : Int64
+    #|  name : String
+    #|  email : String?
+    #|}
+    #|
+  inspect(code, content=expected)
 }
 
 ///|
@@ -29,20 +26,17 @@ test "emit struct with doc and derive" {
     .with_field(@ir.Field::new("y", @ir.Type::double()))
   let emitter = MoonBitEmitter::new()
   let code = emitter.emit_struct(s)
-  inspect(
-    code,
-    content=
-      #|///|
-      #|/// A 2D point
-      #|#derive(Show)
-      #|#derive(Eq)
-      #|pub struct Point {
-      #|  x : Double
-      #|  y : Double
-      #|}
-      #|
-    ,
-  )
+  let expected =
+    #|///|
+    #|/// A 2D point
+    #|#derive(Show)
+    #|#derive(Eq)
+    #|pub struct Point {
+    #|  x : Double
+    #|  y : Double
+    #|}
+    #|
+  inspect(code, content=expected)
 }
 
 ///|
@@ -53,17 +47,14 @@ test "emit enum" {
     .with_variant(@ir.Variant::new("Err").with_tuple([@ir.Type::named("E")]))
   let emitter = MoonBitEmitter::new()
   let code = emitter.emit_enum(e)
-  inspect(
-    code,
-    content=
-      #|///|
-      #|pub enum Result[T, E] {
-      #|  Ok(T)
-      #|  Err(E)
-      #|}
-      #|
-    ,
-  )
+  let expected =
+    #|///|
+    #|pub enum Result[T, E] {
+    #|  Ok(T)
+    #|  Err(E)
+    #|}
+    #|
+  inspect(code, content=expected)
 }
 
 ///|
@@ -75,16 +66,13 @@ test "emit function" {
     .with_body("a + b")
   let emitter = MoonBitEmitter::new()
   let code = emitter.emit_function(f)
-  inspect(
-    code,
-    content=
-      #|///|
-      #|pub fn add(a : Int, b : Int) -> Int {
-      #|  a + b
-      #|}
-      #|
-    ,
-  )
+  let expected =
+    #|///|
+    #|pub fn add(a : Int, b : Int) -> Int {
+    #|  a + b
+    #|}
+    #|
+  inspect(code, content=expected)
 }
 
 ///|
@@ -97,21 +85,18 @@ test "emit async function with error" {
     .with_body("// async fetch implementation")
   let emitter = MoonBitEmitter::new()
   let code = emitter.emit_function(f)
-  inspect(
-    code,
-    content=
-      #|///|
-      #|pub async fn fetch_data(url : String) -> Bytes raise FetchError {
-      #|  // async fetch implementation
-      #|}
-      #|
-    ,
-  )
+  let expected =
+    #|///|
+    #|pub async fn fetch_data(url : String) -> Bytes raise FetchError {
+    #|  // async fetch implementation
+    #|}
+    #|
+  inspect(code, content=expected)
 }
 
 ///|
 test "emit module" {
-  let module = @ir.Module::new()
+  let mod = @ir.Module::new()
     .add_struct(
       @ir.Struct::new("User")
         .with_field(@ir.Field::new("id", @ir.Type::int64()))
@@ -124,21 +109,18 @@ test "emit module" {
         .with_body("{ id: 1L, name }"),
     )
   let emitter = MoonBitEmitter::new()
-  let code = emitter.emit_module(module)
-  inspect(
-    code,
-    content=
-      #|///|
-      #|pub struct User {
-      #|  id : Int64
-      #|  name : String
-      #|}
-      #|
-      #|///|
-      #|pub fn create_user(name : String) -> User {
-      #|  { id: 1L, name }
-      #|}
-      #|
-    ,
-  )
+  let code = emitter.emit_module(mod)
+  let expected =
+    #|///|
+    #|pub struct User {
+    #|  id : Int64
+    #|  name : String
+    #|}
+    #|
+    #|///|
+    #|pub fn create_user(name : String) -> User {
+    #|  { id: 1L, name }
+    #|}
+    #|
+  inspect(code, content=expected)
 }

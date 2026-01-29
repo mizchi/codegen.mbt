@@ -25,7 +25,7 @@ pub fn Visibility::read_only() -> Visibility {
 }
 
 ///|
-pub fn Visibility::package(pkg : String) -> Visibility {
+pub fn Visibility::pkg(pkg : String) -> Visibility {
   Package(pkg)
 }
 
