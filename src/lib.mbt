@@ -29,6 +29,9 @@ pub type Module = @ir.Module
 ///|
 pub type Visibility = @ir.Visibility
 
+///|
+pub type Constraints = @ir.Constraints
+
 // Re-export builders
 pub type StructBuilder = @builder.StructBuilder
 
@@ -43,3 +46,9 @@ pub type ModuleBuilder = @builder.ModuleBuilder
 
 // Re-export emitters
 pub type MoonBitEmitter = @emit.MoonBitEmitter
+
+///|
+pub type JsonSchemaEmitter = @emit.JsonSchemaEmitter
+
+///|
+pub type ValidatorEmitter = @emit.ValidatorEmitter

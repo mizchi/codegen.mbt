@@ -50,11 +50,12 @@ pub struct Field {
   doc : String?
   default_value : String?  // Expression as string for now
   is_mutable : Bool
+  constraints : Constraints
 }
 
 ///|
 pub fn Field::new(name : String, ty : Type) -> Field {
-  { name, ty, doc: None, default_value: None, is_mutable: false }
+  { name, ty, doc: None, default_value: None, is_mutable: false, constraints: Constraints::new() }
 }
 
 ///|
@@ -70,6 +71,46 @@ pub fn Field::with_default(self : Field, value : String) -> Field {
 ///|
 pub fn Field::as_mutable(self : Field) -> Field {
   { ..self, is_mutable: true }
+}
+
+///|
+pub fn Field::as_required(self : Field) -> Field {
+  { ..self, constraints: self.constraints.as_required() }
+}
+
+///|
+pub fn Field::with_max_length(self : Field, len : Int) -> Field {
+  { ..self, constraints: self.constraints.with_max_length(len) }
+}
+
+///|
+pub fn Field::with_min_length(self : Field, len : Int) -> Field {
+  { ..self, constraints: self.constraints.with_min_length(len) }
+}
+
+///|
+pub fn Field::with_min_value(self : Field, val : Int64) -> Field {
+  { ..self, constraints: self.constraints.with_min_value(val) }
+}
+
+///|
+pub fn Field::with_max_value(self : Field, val : Int64) -> Field {
+  { ..self, constraints: self.constraints.with_max_value(val) }
+}
+
+///|
+pub fn Field::with_pattern(self : Field, pat : String) -> Field {
+  { ..self, constraints: self.constraints.with_pattern(pat) }
+}
+
+///|
+pub fn Field::as_unsigned(self : Field) -> Field {
+  { ..self, constraints: self.constraints.as_unsigned() }
+}
+
+///|
+pub fn Field::with_constraints(self : Field, c : Constraints) -> Field {
+  { ..self, constraints: c }
 }
 
 ///|
