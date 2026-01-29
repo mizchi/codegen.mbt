@@ -124,3 +124,40 @@ test "emit module" {
     #|
   inspect(code, content=expected)
 }
+
+///|
+test "emit struct with source ref" {
+  let s = @ir.Struct::new("User")
+    .with_source_ref(@ir.SourceRef::new("UserSchema").with_file("schema.json").with_line(15))
+    .with_field(@ir.Field::new("id", @ir.Type::int64()))
+    .with_field(@ir.Field::new("name", @ir.Type::string()))
+  let emitter = MoonBitEmitter::new().with_source_refs()
+  let code = emitter.emit_struct(s)
+  assert_true(code.contains("// Source: UserSchema (schema.json:15)"))
+  assert_true(code.contains("pub struct User"))
+}
+
+///|
+test "emit enum with source ref" {
+  let e = @ir.Enum::new("Status")
+    .with_source_ref(@ir.SourceRef::new("StatusEnum").with_context("from OpenAPI"))
+    .with_variant(@ir.Variant::new("Active"))
+    .with_variant(@ir.Variant::new("Inactive"))
+  let emitter = MoonBitEmitter::new().with_source_refs()
+  let code = emitter.emit_enum(e)
+  assert_true(code.contains("// Source: StatusEnum - from OpenAPI"))
+  assert_true(code.contains("pub enum Status"))
+}
+
+///|
+test "emit function with source ref" {
+  let f = @ir.Function::new("createUser")
+    .with_source_ref(@ir.SourceRef::new("POST /users"))
+    .with_param(@ir.Param::new("name", @ir.Type::string()))
+    .with_return(@ir.Type::named("User"))
+    .with_body("{ id: 1L, name }")
+  let emitter = MoonBitEmitter::new().with_source_refs()
+  let code = emitter.emit_function(f)
+  assert_true(code.contains("// Source: POST /users"))
+  assert_true(code.contains("pub fn createUser"))
+}

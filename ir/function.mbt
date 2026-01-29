@@ -36,6 +36,7 @@ pub struct Function {
   is_async : Bool
   error_type : Type? // for `raise Error`
   receiver : (String, Type)? // (self_name, self_type) for methods
+  source_ref : SourceRef?
 }
 
 ///|
@@ -51,6 +52,7 @@ pub fn Function::new(name : String) -> Function {
     is_async: false,
     error_type: None,
     receiver: None,
+    source_ref: None,
   }
 }
 
@@ -118,4 +120,9 @@ pub fn Function::with_receiver(
   ty : Type,
 ) -> Function {
   { ..self, receiver: Some((name, ty)) }
+}
+
+///|
+pub fn Function::with_source_ref(self : Function, source : SourceRef) -> Function {
+  { ..self, source_ref: Some(source) }
 }

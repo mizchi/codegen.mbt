@@ -51,6 +51,7 @@ pub struct Field {
   default_value : String? // Expression as string for now
   is_mutable : Bool
   constraints : Constraints
+  source_ref : SourceRef?
 }
 
 ///|
@@ -62,6 +63,7 @@ pub fn Field::new(name : String, ty : Type) -> Field {
     default_value: None,
     is_mutable: false,
     constraints: Constraints::new(),
+    source_ref: None,
   }
 }
 
@@ -121,6 +123,11 @@ pub fn Field::with_constraints(self : Field, c : Constraints) -> Field {
 }
 
 ///|
+pub fn Field::with_source_ref(self : Field, source : SourceRef) -> Field {
+  { ..self, source_ref: Some(source) }
+}
+
+///|
 pub struct Struct {
   name : String
   fields : Array[Field]
@@ -128,6 +135,7 @@ pub struct Struct {
   visibility : Visibility
   type_params : Array[String]
   derives : Array[String]
+  source_ref : SourceRef?
 }
 
 ///|
@@ -139,6 +147,7 @@ pub fn Struct::new(name : String) -> Struct {
     visibility: Public,
     type_params: [],
     derives: [],
+    source_ref: None,
   }
 }
 
@@ -179,4 +188,9 @@ pub fn Struct::with_type_params(
 ///|
 pub fn Struct::with_derives(self : Struct, traits : Array[String]) -> Struct {
   { ..self, derives: traits }
+}
+
+///|
+pub fn Struct::with_source_ref(self : Struct, source : SourceRef) -> Struct {
+  { ..self, source_ref: Some(source) }
 }

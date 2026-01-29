@@ -47,6 +47,28 @@ test "all emitters produce output from same struct" {
   assert_true(fbs.contains("id:long"))
   assert_true(fbs.contains("name:string"))
   assert_true(fbs.contains("tags:[string]"))
+
+  // TypeScript output
+  let ts = TsEmitter::new().emit_struct(user)
+  assert_true(ts.contains("export interface User"))
+  assert_true(ts.contains("readonly id: number"))
+  assert_true(ts.contains("readonly name: string"))
+  assert_true(ts.contains("email?: string | null"))
+  assert_true(ts.contains("readonly tags: string[]"))
+
+  // Protocol Buffers output
+  let proto = ProtoEmitter::new().emit_struct(user)
+  assert_true(proto.contains("message User"))
+  assert_true(proto.contains("int64 id = 1"))
+  assert_true(proto.contains("string name = 2"))
+  assert_true(proto.contains("repeated string tags = 5"))
+
+  // Rust output
+  let rust = RustEmitter::new().emit_struct(user)
+  assert_true(rust.contains("pub struct User"))
+  assert_true(rust.contains("pub id: i64"))
+  assert_true(rust.contains("pub name: String"))
+  assert_true(rust.contains("pub tags: Vec<String>"))
 }
 
 ///|

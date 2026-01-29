@@ -5,8 +5,10 @@
 /// for code generation, with emitters for multiple targets:
 /// - MoonBit source code
 /// - JSON Schema
-/// - Protocol Buffers (planned)
-/// - FlatBuffers (planned)
+/// - Protocol Buffers
+/// - FlatBuffers
+/// - TypeScript
+/// - Rust
 
 // Re-export core types
 pub type Type = @ir.Type
@@ -31,6 +33,9 @@ pub type Visibility = @ir.Visibility
 
 ///|
 pub type Constraints = @ir.Constraints
+
+///|
+pub type SourceRef = @ir.SourceRef
 
 // Re-export builders
 
@@ -59,3 +64,15 @@ pub type ValidatorEmitter = @emit.ValidatorEmitter
 
 ///|
 pub type FbsEmitter = @emit.FbsEmitter
+
+///|
+pub type TsEmitter = @emit.TsEmitter
+
+///|
+pub type ProtoEmitter = @emit.ProtoEmitter
+
+///|
+pub type RustEmitter = @emit.RustEmitter
+
+///|
+pub type ZodEmitter = @emit.ZodEmitter

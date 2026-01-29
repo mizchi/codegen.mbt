@@ -4,18 +4,24 @@
 ///|
 pub struct MoonBitEmitter {
   use_block_separator : Bool // Use ///| block separators
+  emit_source_refs : Bool // Emit source reference comments
 }
 
 ///|
 pub fn MoonBitEmitter::new() -> MoonBitEmitter {
-  { use_block_separator: true }
+  { use_block_separator: true, emit_source_refs: false }
 }
 
 ///|
 pub fn MoonBitEmitter::without_separators(
   _self : MoonBitEmitter,
 ) -> MoonBitEmitter {
-  { use_block_separator: false }
+  { use_block_separator: false, emit_source_refs: false }
+}
+
+///|
+pub fn MoonBitEmitter::with_source_refs(self : MoonBitEmitter) -> MoonBitEmitter {
+  { ..self, emit_source_refs: true }
 }
 
 ///|
@@ -81,6 +87,17 @@ fn MoonBitEmitter::emit_struct_to(
   // Block separator
   if self.use_block_separator {
     buf.write_string("///|\n")
+  }
+  // Source reference comment
+  if self.emit_source_refs {
+    match s.source_ref {
+      Some(src) => {
+        buf.write_string("// ")
+        buf.write_string(src.to_comment())
+        buf.write_string("\n")
+      }
+      None => ()
+    }
   }
   // Doc comment
   match s.doc {
@@ -150,6 +167,17 @@ fn MoonBitEmitter::emit_enum_to(
   // Block separator
   if self.use_block_separator {
     buf.write_string("///|\n")
+  }
+  // Source reference comment
+  if self.emit_source_refs {
+    match e.source_ref {
+      Some(src) => {
+        buf.write_string("// ")
+        buf.write_string(src.to_comment())
+        buf.write_string("\n")
+      }
+      None => ()
+    }
   }
   // Doc comment
   match e.doc {
@@ -235,6 +263,17 @@ fn MoonBitEmitter::emit_function_to(
   // Block separator
   if self.use_block_separator {
     buf.write_string("///|\n")
+  }
+  // Source reference comment
+  if self.emit_source_refs {
+    match f.source_ref {
+      Some(src) => {
+        buf.write_string("// ")
+        buf.write_string(src.to_comment())
+        buf.write_string("\n")
+      }
+      None => ()
+    }
   }
   // Doc comment
   match f.doc {

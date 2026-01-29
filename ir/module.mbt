@@ -54,11 +54,12 @@ pub struct ConstDecl {
   value : String // Expression as string
   doc : String?
   visibility : Visibility
+  source_ref : SourceRef?
 }
 
 ///|
 pub fn ConstDecl::new(name : String, value : String) -> ConstDecl {
-  { name, ty: None, value, doc: None, visibility: Public }
+  { name, ty: None, value, doc: None, visibility: Public, source_ref: None }
 }
 
 ///|
@@ -80,17 +81,23 @@ pub fn ConstDecl::with_visibility(
 }
 
 ///|
+pub fn ConstDecl::with_source_ref(self : ConstDecl, source : SourceRef) -> ConstDecl {
+  { ..self, source_ref: Some(source) }
+}
+
+///|
 pub struct TypeAlias {
   name : String
   target : Type
   doc : String?
   visibility : Visibility
   type_params : Array[String]
+  source_ref : SourceRef?
 }
 
 ///|
 pub fn TypeAlias::new(name : String, target : Type) -> TypeAlias {
-  { name, target, doc: None, visibility: Public, type_params: [] }
+  { name, target, doc: None, visibility: Public, type_params: [], source_ref: None }
 }
 
 ///|
@@ -115,6 +122,11 @@ pub fn TypeAlias::with_type_params(
 }
 
 ///|
+pub fn TypeAlias::with_source_ref(self : TypeAlias, source : SourceRef) -> TypeAlias {
+  { ..self, source_ref: Some(source) }
+}
+
+///|
 pub struct Trait {
   name : String
   methods : Array[Function]
@@ -122,6 +134,7 @@ pub struct Trait {
   visibility : Visibility
   type_params : Array[String]
   super_traits : Array[String]
+  source_ref : SourceRef?
 }
 
 ///|
@@ -133,6 +146,7 @@ pub fn Trait::new(name : String) -> Trait {
     visibility: Public,
     type_params: [],
     super_traits: [],
+    source_ref: None,
   }
 }
 
@@ -156,16 +170,22 @@ pub fn Trait::with_super(self : Trait, super_trait : String) -> Trait {
 }
 
 ///|
+pub fn Trait::with_source_ref(self : Trait, source : SourceRef) -> Trait {
+  { ..self, source_ref: Some(source) }
+}
+
+///|
 pub struct Impl {
   trait_name : String? // None for inherent impl
   type_name : String
   methods : Array[Function]
   type_params : Array[String]
+  source_ref : SourceRef?
 }
 
 ///|
 pub fn Impl::new(type_name : String) -> Impl {
-  { trait_name: None, type_name, methods: [], type_params: [] }
+  { trait_name: None, type_name, methods: [], type_params: [], source_ref: None }
 }
 
 ///|
@@ -181,10 +201,16 @@ pub fn Impl::with_method(self : Impl, func : Function) -> Impl {
 }
 
 ///|
+pub fn Impl::with_source_ref(self : Impl, source : SourceRef) -> Impl {
+  { ..self, source_ref: Some(source) }
+}
+
+///|
 pub struct Module {
   name : String?
   items : Array[TopLevel]
   imports : Array[Import]
+  source_ref : SourceRef?
 }
 
 ///|
@@ -205,7 +231,12 @@ pub fn Import::with_alias(self : Import, name : String) -> Import {
 
 ///|
 pub fn Module::new() -> Module {
-  { name: None, items: [], imports: [] }
+  { name: None, items: [], imports: [], source_ref: None }
+}
+
+///|
+pub fn Module::with_source_ref(self : Module, source : SourceRef) -> Module {
+  { ..self, source_ref: Some(source) }
 }
 
 ///|

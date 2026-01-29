@@ -13,11 +13,12 @@ pub struct Variant {
   name : String
   payload : VariantPayload
   doc : String?
+  source_ref : SourceRef?
 }
 
 ///|
 pub fn Variant::new(name : String) -> Variant {
-  { name, payload: None, doc: None }
+  { name, payload: None, doc: None, source_ref: None }
 }
 
 ///|
@@ -36,6 +37,11 @@ pub fn Variant::with_doc(self : Variant, doc : String) -> Variant {
 }
 
 ///|
+pub fn Variant::with_source_ref(self : Variant, source : SourceRef) -> Variant {
+  { ..self, source_ref: Some(source) }
+}
+
+///|
 pub struct Enum {
   name : String
   variants : Array[Variant]
@@ -43,6 +49,7 @@ pub struct Enum {
   visibility : Visibility
   type_params : Array[String]
   derives : Array[String]
+  source_ref : SourceRef?
 }
 
 ///|
@@ -54,6 +61,7 @@ pub fn Enum::new(name : String) -> Enum {
     visibility: Public,
     type_params: [],
     derives: [],
+    source_ref: None,
   }
 }
 
@@ -91,4 +99,9 @@ pub fn Enum::with_type_params(self : Enum, params : Array[String]) -> Enum {
 ///|
 pub fn Enum::with_derives(self : Enum, traits : Array[String]) -> Enum {
   { ..self, derives: traits }
+}
+
+///|
+pub fn Enum::with_source_ref(self : Enum, source : SourceRef) -> Enum {
+  { ..self, source_ref: Some(source) }
 }
