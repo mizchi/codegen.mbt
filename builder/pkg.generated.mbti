@@ -96,4 +96,3 @@ pub fn StructBuilder::with_visibility(Self, @ir.Visibility) -> Self
 // Type aliases
 
 // Traits
-

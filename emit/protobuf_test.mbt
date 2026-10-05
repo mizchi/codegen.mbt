@@ -9,7 +9,7 @@ test "protobuf: emit basic message" {
     .with_field(@ir.Field::new("name", @ir.Type::string()))
     .with_field(@ir.Field::new("email", @ir.Type::optional(@ir.Type::string())))
     .with_field(@ir.Field::new("tags", @ir.Type::array(@ir.Type::string())))
-  let output = ProtoEmitter::new().emit_struct(user)
+  let output = @emit.ProtoEmitter::new().emit_struct(user)
   assert_true(output.contains("// A user in the system"))
   assert_true(output.contains("message User"))
   assert_true(output.contains("int64 id = 1"))
@@ -25,7 +25,7 @@ test "protobuf: emit simple enum" {
     .with_variant(@ir.Variant::new("Active"))
     .with_variant(@ir.Variant::new("Inactive"))
     .with_variant(@ir.Variant::new("Pending"))
-  let output = ProtoEmitter::new().emit_enum(status)
+  let output = @emit.ProtoEmitter::new().emit_enum(status)
   assert_true(output.contains("// User account status"))
   assert_true(output.contains("enum Status"))
   // Proto3 requires SCREAMING_SNAKE_CASE and starts from 0
@@ -39,7 +39,7 @@ test "protobuf: emit complex enum as oneof" {
   let result = @ir.Enum::new("Result")
     .with_variant(@ir.Variant::new("Ok").with_tuple([@ir.Type::string()]))
     .with_variant(@ir.Variant::new("Err").with_tuple([@ir.Type::string()]))
-  let output = ProtoEmitter::new().emit_enum(result)
+  let output = @emit.ProtoEmitter::new().emit_enum(result)
   // Complex enums use oneof
   assert_true(output.contains("message Result"))
   assert_true(output.contains("oneof variant"))
@@ -64,7 +64,7 @@ test "protobuf: emit module with syntax and package" {
       .with_variant(@ir.Variant::new("Active"))
       .with_variant(@ir.Variant::new("Inactive")),
     )
-  let output = ProtoEmitter::new().emit_module(mod)
+  let output = @emit.ProtoEmitter::new().emit_module(mod)
   assert_true(output.contains("syntax = \"proto3\""))
   assert_true(output.contains("package myapp.users"))
   assert_true(output.contains("message User"))
@@ -82,7 +82,7 @@ test "protobuf: primitive type mapping" {
     .with_field(@ir.Field::new("f64", @ir.Type::double()))
     .with_field(@ir.Field::new("s", @ir.Type::string()))
     .with_field(@ir.Field::new("data", @ir.Type::bytes()))
-  let output = ProtoEmitter::new().emit_struct(types_struct)
+  let output = @emit.ProtoEmitter::new().emit_struct(types_struct)
   assert_true(output.contains("bool b = 1"))
   assert_true(output.contains("int32 i32 = 2"))
   assert_true(output.contains("int64 i64 = 3"))
@@ -101,7 +101,7 @@ test "protobuf: map type" {
       @ir.Type::map(@ir.Type::string(), @ir.Type::int()),
     ),
   )
-  let output = ProtoEmitter::new().emit_struct(config)
+  let output = @emit.ProtoEmitter::new().emit_struct(config)
   assert_true(output.contains("map<string, int32> settings = 1"))
 }
 
@@ -110,7 +110,7 @@ test "protobuf: nested type" {
   let user = @ir.Struct::new("User").with_field(
     @ir.Field::new("profile", @ir.Type::named("Profile")),
   )
-  let output = ProtoEmitter::new().emit_struct(user)
+  let output = @emit.ProtoEmitter::new().emit_struct(user)
   assert_true(output.contains("Profile profile = 1"))
 }
 
@@ -126,7 +126,7 @@ test "protobuf: enum variant with struct payload" {
     .with_variant(
       @ir.Variant::new("UserDeleted").with_tuple([@ir.Type::int64()]),
     )
-  let output = ProtoEmitter::new().emit_enum(event)
+  let output = @emit.ProtoEmitter::new().emit_enum(event)
   assert_true(output.contains("message EventUserCreated"))
   assert_true(output.contains("int64 user_id = 1"))
   assert_true(output.contains("string name = 2"))

@@ -10,22 +10,22 @@ pub struct TsEmitter {
 
 ///|
 pub fn TsEmitter::new() -> TsEmitter {
-  { indent_size: 2, use_readonly: true, export_all: true }
+  { indent_size: 2, use_readonly: true, export_all: true, }
 }
 
 ///|
 pub fn TsEmitter::without_exports(self : TsEmitter) -> TsEmitter {
-  { ..self, export_all: false }
+  { ..self, export_all: false, }
 }
 
 ///|
 pub fn TsEmitter::without_readonly(self : TsEmitter) -> TsEmitter {
-  { ..self, use_readonly: false }
+  { ..self, use_readonly: false, }
 }
 
 ///|
 pub fn TsEmitter::emit_struct(self : TsEmitter, s : @ir.Struct) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_to(buf, s)
   buf.to_string()
 }
@@ -79,7 +79,7 @@ fn TsEmitter::emit_field_to(
 ) -> Unit {
   self.write_indent(buf, 1)
   // Readonly modifier
-  if self.use_readonly && not(field.is_mutable) {
+  if self.use_readonly && !field.is_mutable {
     buf.write_string("readonly ")
   }
   // Field name (convert to camelCase)
@@ -100,7 +100,7 @@ fn TsEmitter::emit_field_to(
 
 ///|
 pub fn TsEmitter::emit_enum(self : TsEmitter, e : @ir.Enum) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_enum_to(buf, e)
   buf.to_string()
 }
@@ -247,7 +247,7 @@ fn TsEmitter::emit_discriminated_union_to(
 
 ///|
 pub fn TsEmitter::emit_type(self : TsEmitter, ty : @ir.Type) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_type_to(buf, ty)
   buf.to_string()
 }
@@ -332,7 +332,7 @@ fn TsEmitter::emit_type_to(
 
 ///|
 pub fn TsEmitter::emit_module(self : TsEmitter, m : @ir.Module) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   // Header comment
   buf.write_string("// Generated code - do not edit\n\n")
   // Emit all items

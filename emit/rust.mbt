@@ -10,22 +10,22 @@ pub struct RustEmitter {
 
 ///|
 pub fn RustEmitter::new() -> RustEmitter {
-  { indent_size: 4, use_serde: true, use_pub: true }
+  { indent_size: 4, use_serde: true, use_pub: true, }
 }
 
 ///|
 pub fn RustEmitter::without_serde(self : RustEmitter) -> RustEmitter {
-  { ..self, use_serde: false }
+  { ..self, use_serde: false, }
 }
 
 ///|
 pub fn RustEmitter::with_private_fields(self : RustEmitter) -> RustEmitter {
-  { ..self, use_pub: false }
+  { ..self, use_pub: false, }
 }
 
 ///|
 pub fn RustEmitter::emit_struct(self : RustEmitter, s : @ir.Struct) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_to(buf, s)
   buf.to_string()
 }
@@ -55,7 +55,7 @@ fn RustEmitter::emit_struct_to(
   }
   // Add user-specified derives
   for d in s.derives {
-    if not(derives.contains(d)) {
+    if !derives.contains(d) {
       derives.push(d)
     }
   }
@@ -114,7 +114,7 @@ fn RustEmitter::emit_field_to(
 
 ///|
 pub fn RustEmitter::emit_enum(self : RustEmitter, e : @ir.Enum) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_enum_to(buf, e)
   buf.to_string()
 }
@@ -143,7 +143,7 @@ fn RustEmitter::emit_enum_to(
     derives.push("Deserialize")
   }
   for d in e.derives {
-    if not(derives.contains(d)) {
+    if !derives.contains(d) {
       derives.push(d)
     }
   }
@@ -219,7 +219,7 @@ fn RustEmitter::emit_variant_to(
 
 ///|
 pub fn RustEmitter::emit_type(self : RustEmitter, ty : @ir.Type) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_type_to(buf, ty)
   buf.to_string()
 }
@@ -294,7 +294,7 @@ fn RustEmitter::emit_type_to(
 
 ///|
 pub fn RustEmitter::emit_module(self : RustEmitter, m : @ir.Module) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   // Header comment
   buf.write_string("// Generated code - do not edit\n\n")
   // Imports

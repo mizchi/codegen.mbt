@@ -20,7 +20,7 @@ pub fn JsonSchemaEmitter::with_indent(
   self : JsonSchemaEmitter,
   size : Int,
 ) -> JsonSchemaEmitter {
-  { ..self, indent_size: size }
+  { ..self, indent_size: size, }
 }
 
 ///|
@@ -28,7 +28,7 @@ pub fn JsonSchemaEmitter::with_draft(
   self : JsonSchemaEmitter,
   draft : String,
 ) -> JsonSchemaEmitter {
-  { ..self, schema_draft: draft }
+  { ..self, schema_draft: draft, }
 }
 
 ///|
@@ -36,7 +36,7 @@ pub fn JsonSchemaEmitter::emit_struct(
   self : JsonSchemaEmitter,
   s : @ir.Struct,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_to(buf, s)
   buf.to_string()
 }
@@ -109,7 +109,7 @@ fn collect_required_fields(fields : Array[@ir.Field]) -> Array[String] {
   let required : Array[String] = []
   for field in fields {
     // Required if: has required constraint OR type is not optional
-    if field.constraints.required || not(is_optional_type(field.ty)) {
+    if field.constraints.required || !is_optional_type(field.ty) {
       required.push(field.name)
     }
   }
@@ -289,7 +289,7 @@ fn JsonSchemaEmitter::write_indent(
 
 ///|
 fn escape_json_string(s : String) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   for c in s {
     match c {
       '"' => buf.write_string("\\\"")
@@ -308,7 +308,7 @@ pub fn JsonSchemaEmitter::emit_enum(
   self : JsonSchemaEmitter,
   e : @ir.Enum,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   buf.write_string("{\n")
   self.write_indent(buf, 1)
   buf.write_string("\"$schema\": \"")

@@ -103,4 +103,3 @@ pub fn ZodEmitter::without_separators(Self) -> Self
 // Type aliases
 
 // Traits
-

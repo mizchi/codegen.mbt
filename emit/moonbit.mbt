@@ -9,21 +9,21 @@ pub struct MoonBitEmitter {
 
 ///|
 pub fn MoonBitEmitter::new() -> MoonBitEmitter {
-  { use_block_separator: true, emit_source_refs: false }
+  { use_block_separator: true, emit_source_refs: false, }
 }
 
 ///|
 pub fn MoonBitEmitter::without_separators(
   _self : MoonBitEmitter,
 ) -> MoonBitEmitter {
-  { use_block_separator: false, emit_source_refs: false }
+  { use_block_separator: false, emit_source_refs: false, }
 }
 
 ///|
 pub fn MoonBitEmitter::with_source_refs(
   self : MoonBitEmitter,
 ) -> MoonBitEmitter {
-  { ..self, emit_source_refs: true }
+  { ..self, emit_source_refs: true, }
 }
 
 ///|
@@ -31,7 +31,7 @@ pub fn MoonBitEmitter::emit_module(
   self : MoonBitEmitter,
   m : @ir.Module,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   // Imports
   for imp in m.imports {
     match imp.as_name {
@@ -75,7 +75,7 @@ pub fn MoonBitEmitter::emit_struct(
   self : MoonBitEmitter,
   s : @ir.Struct,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_to(buf, s)
   buf.to_string()
 }
@@ -155,7 +155,7 @@ fn MoonBitEmitter::emit_struct_to(
 
 ///|
 pub fn MoonBitEmitter::emit_enum(self : MoonBitEmitter, e : @ir.Enum) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_enum_to(buf, e)
   buf.to_string()
 }
@@ -251,7 +251,7 @@ pub fn MoonBitEmitter::emit_function(
   self : MoonBitEmitter,
   f : @ir.Function,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_function_to(buf, f)
   buf.to_string()
 }
@@ -578,7 +578,7 @@ pub fn MoonBitEmitter::emit_type(
   self : MoonBitEmitter,
   ty : @ir.Type,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_type_to(buf, ty)
   buf.to_string()
 }

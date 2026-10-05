@@ -3,7 +3,7 @@ test "emit struct validator with required string" {
   let s = @ir.Struct::new("CreateUserParams").with_field(
     @ir.Field::new("name", @ir.Type::string()).as_required(),
   )
-  let emitter = ValidatorEmitter::new()
+  let emitter = @emit.ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
     #|///|
@@ -23,7 +23,7 @@ test "emit struct validator with max length" {
   let s = @ir.Struct::new("UpdateUserParams").with_field(
     @ir.Field::new("name", @ir.Type::string()).with_max_length(100),
   )
-  let emitter = ValidatorEmitter::new()
+  let emitter = @emit.ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
     #|///|
@@ -43,7 +43,7 @@ test "emit struct validator with unsigned int" {
   let s = @ir.Struct::new("ProductParams").with_field(
     @ir.Field::new("quantity", @ir.Type::int64()).as_unsigned(),
   )
-  let emitter = ValidatorEmitter::new()
+  let emitter = @emit.ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
     #|///|
@@ -65,7 +65,7 @@ test "emit struct validator with optional field" {
       200,
     ),
   )
-  let emitter = ValidatorEmitter::new()
+  let emitter = @emit.ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
     #|///|
@@ -88,7 +88,7 @@ test "emit struct validator with no constraints" {
   let s = @ir.Struct::new("EmptyParams").with_field(
     @ir.Field::new("id", @ir.Type::int64()),
   )
-  let emitter = ValidatorEmitter::new()
+  let emitter = @emit.ValidatorEmitter::new()
   let code = emitter.emit_struct_validator(s)
   let expected =
     #|///|
@@ -123,7 +123,7 @@ test "snapshot: comprehensive validator with multiple constraints" {
       .with_min_value(0L)
       .with_max_value(150L),
     )
-  let code = ValidatorEmitter::new().emit_struct_validator(user)
+  let code = @emit.ValidatorEmitter::new().emit_struct_validator(user)
   let expected =
     #|///|
     #|/// Validate User
@@ -169,7 +169,7 @@ test "snapshot: validator with min_length only" {
   let params = @ir.Struct::new("SearchParams").with_field(
     @ir.Field::new("query", @ir.Type::string()).with_min_length(3),
   )
-  let code = ValidatorEmitter::new().emit_struct_validator(params)
+  let code = @emit.ValidatorEmitter::new().emit_struct_validator(params)
   let expected =
     #|///|
     #|/// Validate SearchParams
@@ -192,7 +192,7 @@ test "snapshot: validator with numeric range" {
       .with_max_value(65535L),
     )
     .with_field(@ir.Field::new("timeout", @ir.Type::int64()).as_unsigned())
-  let code = ValidatorEmitter::new().emit_struct_validator(config)
+  let code = @emit.ValidatorEmitter::new().emit_struct_validator(config)
   let expected =
     #|///|
     #|/// Validate Config

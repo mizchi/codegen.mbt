@@ -55,62 +55,62 @@ pub fn Field::new(name : String, ty : Type) -> Field {
 
 ///|
 pub fn Field::with_doc(self : Field, doc : String) -> Field {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
 pub fn Field::with_default(self : Field, value : String) -> Field {
-  { ..self, default_value: Some(value) }
+  { ..self, default_value: Some(value), }
 }
 
 ///|
 pub fn Field::as_mutable(self : Field) -> Field {
-  { ..self, is_mutable: true }
+  { ..self, is_mutable: true, }
 }
 
 ///|
 pub fn Field::as_required(self : Field) -> Field {
-  { ..self, constraints: self.constraints.as_required() }
+  { ..self, constraints: self.constraints.as_required(), }
 }
 
 ///|
 pub fn Field::with_max_length(self : Field, len : Int) -> Field {
-  { ..self, constraints: self.constraints.with_max_length(len) }
+  { ..self, constraints: self.constraints.with_max_length(len), }
 }
 
 ///|
 pub fn Field::with_min_length(self : Field, len : Int) -> Field {
-  { ..self, constraints: self.constraints.with_min_length(len) }
+  { ..self, constraints: self.constraints.with_min_length(len), }
 }
 
 ///|
 pub fn Field::with_min_value(self : Field, val : Int64) -> Field {
-  { ..self, constraints: self.constraints.with_min_value(val) }
+  { ..self, constraints: self.constraints.with_min_value(val), }
 }
 
 ///|
 pub fn Field::with_max_value(self : Field, val : Int64) -> Field {
-  { ..self, constraints: self.constraints.with_max_value(val) }
+  { ..self, constraints: self.constraints.with_max_value(val), }
 }
 
 ///|
 pub fn Field::with_pattern(self : Field, pat : String) -> Field {
-  { ..self, constraints: self.constraints.with_pattern(pat) }
+  { ..self, constraints: self.constraints.with_pattern(pat), }
 }
 
 ///|
 pub fn Field::as_unsigned(self : Field) -> Field {
-  { ..self, constraints: self.constraints.as_unsigned() }
+  { ..self, constraints: self.constraints.as_unsigned(), }
 }
 
 ///|
 pub fn Field::with_constraints(self : Field, c : Constraints) -> Field {
-  { ..self, constraints: c }
+  { ..self, constraints: c, }
 }
 
 ///|
 pub fn Field::with_source_ref(self : Field, source : SourceRef) -> Field {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }
 
 ///|
@@ -150,17 +150,17 @@ pub fn Struct::with_fields(self : Struct, fields : Array[Field]) -> Struct {
   for f in fields {
     new_fields.push(f)
   }
-  { ..self, fields: new_fields }
+  { ..self, fields: new_fields, }
 }
 
 ///|
 pub fn Struct::with_doc(self : Struct, doc : String) -> Struct {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
 pub fn Struct::with_visibility(self : Struct, vis : Visibility) -> Struct {
-  { ..self, visibility: vis }
+  { ..self, visibility: vis, }
 }
 
 ///|
@@ -168,15 +168,15 @@ pub fn Struct::with_type_params(
   self : Struct,
   params : Array[String],
 ) -> Struct {
-  { ..self, type_params: params }
+  { ..self, type_params: params, }
 }
 
 ///|
 pub fn Struct::with_derives(self : Struct, traits : Array[String]) -> Struct {
-  { ..self, derives: traits }
+  { ..self, derives: traits, }
 }
 
 ///|
 pub fn Struct::with_source_ref(self : Struct, source : SourceRef) -> Struct {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }

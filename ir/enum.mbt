@@ -18,27 +18,27 @@ pub struct Variant {
 
 ///|
 pub fn Variant::new(name : String) -> Variant {
-  { name, payload: None, doc: None, source_ref: None }
+  { name, payload: None, doc: None, source_ref: None, }
 }
 
 ///|
 pub fn Variant::with_tuple(self : Variant, types : Array[Type]) -> Variant {
-  { ..self, payload: Tuple(types) }
+  { ..self, payload: Tuple(types), }
 }
 
 ///|
 pub fn Variant::with_struct(self : Variant, fields : Array[Field]) -> Variant {
-  { ..self, payload: Struct(fields) }
+  { ..self, payload: Struct(fields), }
 }
 
 ///|
 pub fn Variant::with_doc(self : Variant, doc : String) -> Variant {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
 pub fn Variant::with_source_ref(self : Variant, source : SourceRef) -> Variant {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }
 
 ///|
@@ -78,30 +78,30 @@ pub fn Enum::with_variants(self : Enum, variants : Array[Variant]) -> Enum {
   for v in variants {
     new_variants.push(v)
   }
-  { ..self, variants: new_variants }
+  { ..self, variants: new_variants, }
 }
 
 ///|
 pub fn Enum::with_doc(self : Enum, doc : String) -> Enum {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
 pub fn Enum::with_visibility(self : Enum, vis : Visibility) -> Enum {
-  { ..self, visibility: vis }
+  { ..self, visibility: vis, }
 }
 
 ///|
 pub fn Enum::with_type_params(self : Enum, params : Array[String]) -> Enum {
-  { ..self, type_params: params }
+  { ..self, type_params: params, }
 }
 
 ///|
 pub fn Enum::with_derives(self : Enum, traits : Array[String]) -> Enum {
-  { ..self, derives: traits }
+  { ..self, derives: traits, }
 }
 
 ///|
 pub fn Enum::with_source_ref(self : Enum, source : SourceRef) -> Enum {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }

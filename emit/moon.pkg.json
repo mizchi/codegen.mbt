@@ -1,9 +1,0 @@
-{
-  "import": [
-    "mizchi/codegen/ir",
-    "mizchi/codegen/utils"
-  ],
-  "test-import": [
-    "mizchi/codegen/builder"
-  ]
-}

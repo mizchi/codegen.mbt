@@ -3,7 +3,7 @@
 
 ///|
 pub fn to_snake_case(s : String) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   let chars = s.to_array()
   for i, c in chars {
     if c >= 'A' && c <= 'Z' {
@@ -30,7 +30,7 @@ pub fn to_snake_case(s : String) -> String {
 
 ///|
 pub fn to_pascal_case(s : String) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   let mut capitalize_next = true
   for c in s {
     if c == '_' || c == '-' || c == ' ' {

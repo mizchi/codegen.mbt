@@ -8,12 +8,12 @@ pub struct ZodEmitter {
 
 ///|
 pub fn ZodEmitter::new() -> ZodEmitter {
-  { use_block_separator: true }
+  { use_block_separator: true, }
 }
 
 ///|
 pub fn ZodEmitter::without_separators(_self : ZodEmitter) -> ZodEmitter {
-  { use_block_separator: false }
+  { use_block_separator: false, }
 }
 
 ///|
@@ -22,7 +22,7 @@ pub fn ZodEmitter::emit_struct_parser(
   self : ZodEmitter,
   s : @ir.Struct,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_parser_to(buf, s)
   buf.to_string()
 }
@@ -370,7 +370,7 @@ pub fn ZodEmitter::emit_struct_serializer(
   self : ZodEmitter,
   s : @ir.Struct,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_serializer_to(buf, s)
   buf.to_string()
 }
@@ -498,7 +498,7 @@ fn ZodEmitter::emit_value_to_json(
 ///|
 /// Generate both parser and serializer for a struct
 pub fn ZodEmitter::emit_struct(self : ZodEmitter, s : @ir.Struct) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_parser_to(buf, s)
   buf.write_string("\n")
   self.emit_struct_serializer_to(buf, s)
@@ -583,7 +583,7 @@ pub fn ZodEmitter::emit_helpers(_self : ZodEmitter) -> String {
     #|  }
     #|}
     #|
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   buf.write_string(helpers)
   buf.to_string()
 }
@@ -591,7 +591,7 @@ pub fn ZodEmitter::emit_helpers(_self : ZodEmitter) -> String {
 ///|
 /// Generate parsers and serializers for all structs in a module
 pub fn ZodEmitter::emit_module(self : ZodEmitter, m : @ir.Module) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   buf.write_string("// Generated JSON parsers and serializers\n\n")
   // Emit helper functions first
   buf.write_string(self.emit_helpers())
@@ -620,7 +620,7 @@ pub fn ZodEmitter::emit_module(self : ZodEmitter, m : @ir.Module) -> String {
 ///|
 /// Generate from_json parser for an enum
 pub fn ZodEmitter::emit_enum_parser(self : ZodEmitter, e : @ir.Enum) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_enum_parser_to(buf, e)
   buf.to_string()
 }
@@ -793,7 +793,7 @@ pub fn ZodEmitter::emit_enum_serializer(
   self : ZodEmitter,
   e : @ir.Enum,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_enum_serializer_to(buf, e)
   buf.to_string()
 }
