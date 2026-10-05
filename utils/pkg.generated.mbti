@@ -21,4 +21,3 @@ pub fn to_snake_case(String) -> String
 // Type aliases
 
 // Traits
-

@@ -10,7 +10,7 @@ pub struct ModuleBuilder {
 
 ///|
 pub fn ModuleBuilder::new() -> ModuleBuilder {
-  { name: None, items: [], imports: [] }
+  { name: None, items: [], imports: [], }
 }
 
 ///|

@@ -4,7 +4,7 @@ test "emit simple struct" {
     .with_field(@ir.Field::new("id", @ir.Type::int64()))
     .with_field(@ir.Field::new("name", @ir.Type::string()))
     .with_field(@ir.Field::new("email", @ir.Type::optional(@ir.Type::string())))
-  let emitter = MoonBitEmitter::new()
+  let emitter = @emit.MoonBitEmitter::new()
   let code = emitter.emit_struct(s)
   let expected =
     #|///|
@@ -24,7 +24,7 @@ test "emit struct with doc and derive" {
     .with_derives(["Show", "Eq"])
     .with_field(@ir.Field::new("x", @ir.Type::double()))
     .with_field(@ir.Field::new("y", @ir.Type::double()))
-  let emitter = MoonBitEmitter::new()
+  let emitter = @emit.MoonBitEmitter::new()
   let code = emitter.emit_struct(s)
   let expected =
     #|///|
@@ -45,7 +45,7 @@ test "emit enum" {
     .with_type_params(["T", "E"])
     .with_variant(@ir.Variant::new("Ok").with_tuple([@ir.Type::named("T")]))
     .with_variant(@ir.Variant::new("Err").with_tuple([@ir.Type::named("E")]))
-  let emitter = MoonBitEmitter::new()
+  let emitter = @emit.MoonBitEmitter::new()
   let code = emitter.emit_enum(e)
   let expected =
     #|///|
@@ -64,7 +64,7 @@ test "emit function" {
     .with_param(@ir.Param::new("b", @ir.Type::int()))
     .with_return(@ir.Type::int())
     .with_body("a + b")
-  let emitter = MoonBitEmitter::new()
+  let emitter = @emit.MoonBitEmitter::new()
   let code = emitter.emit_function(f)
   let expected =
     #|///|
@@ -83,7 +83,7 @@ test "emit async function with error" {
     .with_error(@ir.Type::named("FetchError"))
     .as_async()
     .with_body("// async fetch implementation")
-  let emitter = MoonBitEmitter::new()
+  let emitter = @emit.MoonBitEmitter::new()
   let code = emitter.emit_function(f)
   let expected =
     #|///|
@@ -108,7 +108,7 @@ test "emit module" {
       .with_return(@ir.Type::named("User"))
       .with_body("{ id: 1L, name }"),
     )
-  let emitter = MoonBitEmitter::new()
+  let emitter = @emit.MoonBitEmitter::new()
   let code = emitter.emit_module(mod)
   let expected =
     #|///|
@@ -133,7 +133,7 @@ test "emit struct with source ref" {
     )
     .with_field(@ir.Field::new("id", @ir.Type::int64()))
     .with_field(@ir.Field::new("name", @ir.Type::string()))
-  let emitter = MoonBitEmitter::new().with_source_refs()
+  let emitter = @emit.MoonBitEmitter::new().with_source_refs()
   let code = emitter.emit_struct(s)
   assert_true(code.contains("// Source: UserSchema (schema.json:15)"))
   assert_true(code.contains("pub struct User"))
@@ -147,7 +147,7 @@ test "emit enum with source ref" {
     )
     .with_variant(@ir.Variant::new("Active"))
     .with_variant(@ir.Variant::new("Inactive"))
-  let emitter = MoonBitEmitter::new().with_source_refs()
+  let emitter = @emit.MoonBitEmitter::new().with_source_refs()
   let code = emitter.emit_enum(e)
   assert_true(code.contains("// Source: StatusEnum - from OpenAPI"))
   assert_true(code.contains("pub enum Status"))
@@ -160,7 +160,7 @@ test "emit function with source ref" {
     .with_param(@ir.Param::new("name", @ir.Type::string()))
     .with_return(@ir.Type::named("User"))
     .with_body("{ id: 1L, name }")
-  let emitter = MoonBitEmitter::new().with_source_refs()
+  let emitter = @emit.MoonBitEmitter::new().with_source_refs()
   let code = emitter.emit_function(f)
   assert_true(code.contains("// Source: POST /users"))
   assert_true(code.contains("pub fn createUser"))

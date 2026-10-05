@@ -18,7 +18,7 @@ test "all emitters produce output from same struct" {
     .with_field(@ir.Field::new("tags", @ir.Type::array(@ir.Type::string())))
 
   // MoonBit output
-  let moonbit = MoonBitEmitter::new().emit_struct(user)
+  let moonbit = @emit.MoonBitEmitter::new().emit_struct(user)
   assert_true(moonbit.contains("pub struct User"))
   assert_true(moonbit.contains("id : Int64"))
   assert_true(moonbit.contains("name : String"))
@@ -27,7 +27,7 @@ test "all emitters produce output from same struct" {
   assert_true(moonbit.contains("#derive(Show)"))
 
   // JSON Schema output
-  let jsonschema = JsonSchemaEmitter::new().emit_struct(user)
+  let jsonschema = @emit.JsonSchemaEmitter::new().emit_struct(user)
   assert_true(jsonschema.contains("\"type\": \"object\""))
   assert_true(jsonschema.contains("\"title\": \"User\""))
   assert_true(jsonschema.contains("\"properties\""))
@@ -35,21 +35,21 @@ test "all emitters produce output from same struct" {
   assert_true(jsonschema.contains("\"minimum\": 0")) // unsigned
 
   // Validator output
-  let validator = ValidatorEmitter::new().emit_struct_validator(user)
+  let validator = @emit.ValidatorEmitter::new().emit_struct_validator(user)
   assert_true(validator.contains("pub fn User::validate"))
   assert_true(validator.contains("name is required"))
   assert_true(validator.contains("name must be at most 100 characters"))
   assert_true(validator.contains("age must be non-negative"))
 
   // FlatBuffers output
-  let fbs = FbsEmitter::new().emit_struct(user)
+  let fbs = @emit.FbsEmitter::new().emit_struct(user)
   assert_true(fbs.contains("table User"))
   assert_true(fbs.contains("id:long"))
   assert_true(fbs.contains("name:string"))
   assert_true(fbs.contains("tags:[string]"))
 
   // TypeScript output
-  let ts = TsEmitter::new().emit_struct(user)
+  let ts = @emit.TsEmitter::new().emit_struct(user)
   assert_true(ts.contains("export interface User"))
   assert_true(ts.contains("readonly id: number"))
   assert_true(ts.contains("readonly name: string"))
@@ -57,14 +57,14 @@ test "all emitters produce output from same struct" {
   assert_true(ts.contains("readonly tags: string[]"))
 
   // Protocol Buffers output
-  let proto = ProtoEmitter::new().emit_struct(user)
+  let proto = @emit.ProtoEmitter::new().emit_struct(user)
   assert_true(proto.contains("message User"))
   assert_true(proto.contains("int64 id = 1"))
   assert_true(proto.contains("string name = 2"))
   assert_true(proto.contains("repeated string tags = 5"))
 
   // Rust output
-  let rust = RustEmitter::new().emit_struct(user)
+  let rust = @emit.RustEmitter::new().emit_struct(user)
   assert_true(rust.contains("pub struct User"))
   assert_true(rust.contains("pub id: i64"))
   assert_true(rust.contains("pub name: String"))
@@ -80,20 +80,20 @@ test "all emitters produce output from same enum" {
     .with_variant(@ir.Variant::new("Pending"))
 
   // MoonBit output
-  let moonbit = MoonBitEmitter::new().emit_enum(status)
+  let moonbit = @emit.MoonBitEmitter::new().emit_enum(status)
   assert_true(moonbit.contains("pub enum Status"))
   assert_true(moonbit.contains("Active"))
   assert_true(moonbit.contains("Inactive"))
   assert_true(moonbit.contains("Pending"))
 
   // JSON Schema output
-  let jsonschema = JsonSchemaEmitter::new().emit_enum(status)
+  let jsonschema = @emit.JsonSchemaEmitter::new().emit_enum(status)
   assert_true(jsonschema.contains("\"title\": \"Status\""))
   assert_true(jsonschema.contains("\"enum\""))
   assert_true(jsonschema.contains("\"Active\""))
 
   // FlatBuffers output
-  let fbs = FbsEmitter::new().emit_enum(status)
+  let fbs = @emit.FbsEmitter::new().emit_enum(status)
   assert_true(fbs.contains("enum Status"))
   assert_true(fbs.contains("Active"))
 }
@@ -120,13 +120,13 @@ test "module with multiple items" {
     )
 
   // MoonBit module
-  let moonbit = MoonBitEmitter::new().emit_module(mod)
+  let moonbit = @emit.MoonBitEmitter::new().emit_module(mod)
   assert_true(moonbit.contains("pub struct User"))
   assert_true(moonbit.contains("pub struct Post"))
   assert_true(moonbit.contains("pub enum PostStatus"))
 
   // FlatBuffers schema
-  let fbs = FbsEmitter::new().emit_module(mod)
+  let fbs = @emit.FbsEmitter::new().emit_module(mod)
   assert_true(fbs.contains("namespace myapp"))
   assert_true(fbs.contains("table User"))
   assert_true(fbs.contains("table Post"))
@@ -144,9 +144,9 @@ test "roundtrip: builder to emitter" {
     .build()
 
   // Emit to all formats
-  let moonbit = MoonBitEmitter::new().emit_struct(user)
-  let jsonschema = JsonSchemaEmitter::new().emit_struct(user)
-  let fbs = FbsEmitter::new().emit_struct(user)
+  let moonbit = @emit.MoonBitEmitter::new().emit_struct(user)
+  let jsonschema = @emit.JsonSchemaEmitter::new().emit_struct(user)
+  let fbs = @emit.FbsEmitter::new().emit_struct(user)
 
   // Verify outputs
   assert_true(moonbit.contains("pub struct Person"))
@@ -163,7 +163,7 @@ test "function emitter" {
     .with_param(@ir.Param::new("email", @ir.Type::string()))
     .with_return(@ir.Type::named("User"))
     .with_body("{ id: 1L, name, email, age: 0L, tags: [] }")
-  let moonbit = MoonBitEmitter::new().emit_function(func)
+  let moonbit = @emit.MoonBitEmitter::new().emit_function(func)
   assert_true(moonbit.contains("pub fn createUser"))
   assert_true(moonbit.contains("name : String"))
   assert_true(moonbit.contains("-> User"))

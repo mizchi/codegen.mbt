@@ -5,7 +5,7 @@ test "emit simple struct to json schema" {
     .with_field(@ir.Field::new("id", @ir.Type::int64()))
     .with_field(@ir.Field::new("name", @ir.Type::string()).as_required())
     .with_field(@ir.Field::new("email", @ir.Type::optional(@ir.Type::string())))
-  let emitter = JsonSchemaEmitter::new()
+  let emitter = @emit.JsonSchemaEmitter::new()
   let code = emitter.emit_struct(s)
   let expected =
     #|{
@@ -43,7 +43,7 @@ test "emit struct with constraints to json schema" {
       .as_unsigned()
       .with_max_value(150L),
     )
-  let emitter = JsonSchemaEmitter::new()
+  let emitter = @emit.JsonSchemaEmitter::new()
   let code = emitter.emit_struct(s)
   let expected =
     #|{
@@ -74,7 +74,7 @@ test "emit simple enum to json schema" {
     .with_variant(@ir.Variant::new("Active"))
     .with_variant(@ir.Variant::new("Inactive"))
     .with_variant(@ir.Variant::new("Pending"))
-  let emitter = JsonSchemaEmitter::new()
+  let emitter = @emit.JsonSchemaEmitter::new()
   let code = emitter.emit_enum(e)
   let expected =
     #|{

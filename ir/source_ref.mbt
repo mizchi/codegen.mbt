@@ -16,28 +16,28 @@ pub struct SourceRef {
 
 ///|
 pub fn SourceRef::new(id : String) -> SourceRef {
-  { id, file: None, line: None, context: None }
+  { id, file: None, line: None, context: None, }
 }
 
 ///|
 pub fn SourceRef::with_file(self : SourceRef, file : String) -> SourceRef {
-  { ..self, file: Some(file) }
+  { ..self, file: Some(file), }
 }
 
 ///|
 pub fn SourceRef::with_line(self : SourceRef, line : Int) -> SourceRef {
-  { ..self, line: Some(line) }
+  { ..self, line: Some(line), }
 }
 
 ///|
 pub fn SourceRef::with_context(self : SourceRef, ctx : String) -> SourceRef {
-  { ..self, context: Some(ctx) }
+  { ..self, context: Some(ctx), }
 }
 
 ///|
 /// Format the source reference as a comment string
 pub fn SourceRef::to_comment(self : SourceRef) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   buf.write_string("Source: ")
   buf.write_string(self.id)
   match self.file {

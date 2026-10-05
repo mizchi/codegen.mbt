@@ -29,7 +29,7 @@ pub fn Constraints::new() -> Constraints {
 
 ///|
 pub fn Constraints::as_required(self : Constraints) -> Constraints {
-  { ..self, required: true }
+  { ..self, required: true, }
 }
 
 ///|
@@ -37,7 +37,7 @@ pub fn Constraints::with_min_length(
   self : Constraints,
   len : Int,
 ) -> Constraints {
-  { ..self, min_length: Some(len) }
+  { ..self, min_length: Some(len), }
 }
 
 ///|
@@ -45,7 +45,7 @@ pub fn Constraints::with_max_length(
   self : Constraints,
   len : Int,
 ) -> Constraints {
-  { ..self, max_length: Some(len) }
+  { ..self, max_length: Some(len), }
 }
 
 ///|
@@ -53,7 +53,7 @@ pub fn Constraints::with_min_value(
   self : Constraints,
   val : Int64,
 ) -> Constraints {
-  { ..self, min_value: Some(val) }
+  { ..self, min_value: Some(val), }
 }
 
 ///|
@@ -61,7 +61,7 @@ pub fn Constraints::with_max_value(
   self : Constraints,
   val : Int64,
 ) -> Constraints {
-  { ..self, max_value: Some(val) }
+  { ..self, max_value: Some(val), }
 }
 
 ///|
@@ -69,12 +69,12 @@ pub fn Constraints::with_pattern(
   self : Constraints,
   pat : String,
 ) -> Constraints {
-  { ..self, pattern: Some(pat) }
+  { ..self, pattern: Some(pat), }
 }
 
 ///|
 pub fn Constraints::as_unsigned(self : Constraints) -> Constraints {
-  { ..self, unsigned: true }
+  { ..self, unsigned: true, }
 }
 
 ///|
@@ -89,12 +89,12 @@ pub fn Constraints::with_custom(
 
 ///|
 pub fn Constraints::is_empty(self : Constraints) -> Bool {
-  not(self.required) &&
+  !self.required &&
   self.min_length is None &&
   self.max_length is None &&
   self.min_value is None &&
   self.max_value is None &&
   self.pattern is None &&
-  not(self.unsigned) &&
+  !self.unsigned &&
   self.custom.length() == 0
 }

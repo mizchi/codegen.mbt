@@ -8,14 +8,14 @@ pub struct ValidatorEmitter {
 
 ///|
 pub fn ValidatorEmitter::new() -> ValidatorEmitter {
-  { use_block_separator: true }
+  { use_block_separator: true, }
 }
 
 ///|
 pub fn ValidatorEmitter::without_separators(
   _self : ValidatorEmitter,
 ) -> ValidatorEmitter {
-  { use_block_separator: false }
+  { use_block_separator: false, }
 }
 
 ///|
@@ -23,7 +23,7 @@ pub fn ValidatorEmitter::emit_struct_validator(
   self : ValidatorEmitter,
   s : @ir.Struct,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_validator_to(buf, s)
   buf.to_string()
 }
@@ -64,7 +64,7 @@ fn ValidatorEmitter::emit_struct_validator_to(
 ///|
 fn has_validatable_fields(fields : Array[@ir.Field]) -> Bool {
   for field in fields {
-    if not(field.constraints.is_empty()) {
+    if !field.constraints.is_empty() {
       return true
     }
   }
@@ -278,7 +278,7 @@ pub fn ValidatorEmitter::emit_module_validators(
   self : ValidatorEmitter,
   m : @ir.Module,
 ) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   buf.write_string("// Generated validators\n\n")
   for item in m.items {
     match item {

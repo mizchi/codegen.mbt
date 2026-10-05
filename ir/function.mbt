@@ -11,17 +11,17 @@ pub struct Param {
 
 ///|
 pub fn Param::new(name : String, ty : Type) -> Param {
-  { name, ty, label: None, default_value: None }
+  { name, ty, label: None, default_value: None, }
 }
 
 ///|
 pub fn Param::with_label(self : Param, label : String) -> Param {
-  { ..self, label: Some(label) }
+  { ..self, label: Some(label), }
 }
 
 ///|
 pub fn Param::with_default(self : Param, value : String) -> Param {
-  { ..self, default_value: Some(value) }
+  { ..self, default_value: Some(value), }
 }
 
 ///|
@@ -72,27 +72,27 @@ pub fn Function::with_params(
   for p in params {
     new_params.push(p)
   }
-  { ..self, params: new_params }
+  { ..self, params: new_params, }
 }
 
 ///|
 pub fn Function::with_return(self : Function, ty : Type) -> Function {
-  { ..self, return_type: ty }
+  { ..self, return_type: ty, }
 }
 
 ///|
 pub fn Function::with_body(self : Function, body : String) -> Function {
-  { ..self, body: Some(body) }
+  { ..self, body: Some(body), }
 }
 
 ///|
 pub fn Function::with_doc(self : Function, doc : String) -> Function {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
 pub fn Function::with_visibility(self : Function, vis : Visibility) -> Function {
-  { ..self, visibility: vis }
+  { ..self, visibility: vis, }
 }
 
 ///|
@@ -100,17 +100,17 @@ pub fn Function::with_type_params(
   self : Function,
   params : Array[String],
 ) -> Function {
-  { ..self, type_params: params }
+  { ..self, type_params: params, }
 }
 
 ///|
 pub fn Function::as_async(self : Function) -> Function {
-  { ..self, is_async: true }
+  { ..self, is_async: true, }
 }
 
 ///|
 pub fn Function::with_error(self : Function, error_type : Type) -> Function {
-  { ..self, error_type: Some(error_type) }
+  { ..self, error_type: Some(error_type), }
 }
 
 ///|
@@ -119,7 +119,7 @@ pub fn Function::with_receiver(
   name : String,
   ty : Type,
 ) -> Function {
-  { ..self, receiver: Some((name, ty)) }
+  { ..self, receiver: Some((name, ty)), }
 }
 
 ///|
@@ -127,5 +127,5 @@ pub fn Function::with_source_ref(
   self : Function,
   source : SourceRef,
 ) -> Function {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }

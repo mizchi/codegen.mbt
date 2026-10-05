@@ -9,17 +9,17 @@ pub struct FbsEmitter {
 
 ///|
 pub fn FbsEmitter::new() -> FbsEmitter {
-  { indent_size: 2, use_tables: true }
+  { indent_size: 2, use_tables: true, }
 }
 
 ///|
 pub fn FbsEmitter::with_structs(self : FbsEmitter) -> FbsEmitter {
-  { ..self, use_tables: false }
+  { ..self, use_tables: false, }
 }
 
 ///|
 pub fn FbsEmitter::emit_struct(self : FbsEmitter, s : @ir.Struct) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_struct_to(buf, s)
   buf.to_string()
 }
@@ -77,7 +77,7 @@ fn FbsEmitter::emit_field_to(
 
 ///|
 pub fn FbsEmitter::emit_enum(self : FbsEmitter, e : @ir.Enum) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_enum_to(buf, e)
   buf.to_string()
 }
@@ -139,7 +139,7 @@ fn FbsEmitter::emit_enum_to(
 
 ///|
 pub fn FbsEmitter::emit_module(self : FbsEmitter, m : @ir.Module) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   // Namespace from module name
   match m.name {
     Some(name) => {
@@ -196,7 +196,7 @@ fn primitive_to_fbs(name : String) -> String {
 
 ///|
 fn to_snake_case(s : String) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   for i, c in s {
     if c >= 'A' && c <= 'Z' {
       if i > 0 {

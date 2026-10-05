@@ -59,17 +59,17 @@ pub struct ConstDecl {
 
 ///|
 pub fn ConstDecl::new(name : String, value : String) -> ConstDecl {
-  { name, ty: None, value, doc: None, visibility: Public, source_ref: None }
+  { name, ty: None, value, doc: None, visibility: Public, source_ref: None, }
 }
 
 ///|
 pub fn ConstDecl::with_type(self : ConstDecl, ty : Type) -> ConstDecl {
-  { ..self, ty: Some(ty) }
+  { ..self, ty: Some(ty), }
 }
 
 ///|
 pub fn ConstDecl::with_doc(self : ConstDecl, doc : String) -> ConstDecl {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
@@ -77,7 +77,7 @@ pub fn ConstDecl::with_visibility(
   self : ConstDecl,
   vis : Visibility,
 ) -> ConstDecl {
-  { ..self, visibility: vis }
+  { ..self, visibility: vis, }
 }
 
 ///|
@@ -85,7 +85,7 @@ pub fn ConstDecl::with_source_ref(
   self : ConstDecl,
   source : SourceRef,
 ) -> ConstDecl {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }
 
 ///|
@@ -112,7 +112,7 @@ pub fn TypeAlias::new(name : String, target : Type) -> TypeAlias {
 
 ///|
 pub fn TypeAlias::with_doc(self : TypeAlias, doc : String) -> TypeAlias {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
@@ -120,7 +120,7 @@ pub fn TypeAlias::with_visibility(
   self : TypeAlias,
   vis : Visibility,
 ) -> TypeAlias {
-  { ..self, visibility: vis }
+  { ..self, visibility: vis, }
 }
 
 ///|
@@ -128,7 +128,7 @@ pub fn TypeAlias::with_type_params(
   self : TypeAlias,
   params : Array[String],
 ) -> TypeAlias {
-  { ..self, type_params: params }
+  { ..self, type_params: params, }
 }
 
 ///|
@@ -136,7 +136,7 @@ pub fn TypeAlias::with_source_ref(
   self : TypeAlias,
   source : SourceRef,
 ) -> TypeAlias {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }
 
 ///|
@@ -172,7 +172,7 @@ pub fn Trait::with_method(self : Trait, func : Function) -> Trait {
 
 ///|
 pub fn Trait::with_doc(self : Trait, doc : String) -> Trait {
-  { ..self, doc: Some(doc) }
+  { ..self, doc: Some(doc), }
 }
 
 ///|
@@ -184,7 +184,7 @@ pub fn Trait::with_super(self : Trait, super_trait : String) -> Trait {
 
 ///|
 pub fn Trait::with_source_ref(self : Trait, source : SourceRef) -> Trait {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }
 
 ///|
@@ -209,7 +209,7 @@ pub fn Impl::new(type_name : String) -> Impl {
 
 ///|
 pub fn Impl::for_trait(self : Impl, trait_name : String) -> Impl {
-  { ..self, trait_name: Some(trait_name) }
+  { ..self, trait_name: Some(trait_name), }
 }
 
 ///|
@@ -221,7 +221,7 @@ pub fn Impl::with_method(self : Impl, func : Function) -> Impl {
 
 ///|
 pub fn Impl::with_source_ref(self : Impl, source : SourceRef) -> Impl {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }
 
 ///|
@@ -240,27 +240,27 @@ pub struct Import {
 
 ///|
 pub fn Import::new(path : String) -> Import {
-  { path, as_name: None }
+  { path, as_name: None, }
 }
 
 ///|
 pub fn Import::with_alias(self : Import, name : String) -> Import {
-  { ..self, as_name: Some(name) }
+  { ..self, as_name: Some(name), }
 }
 
 ///|
 pub fn Module::new() -> Module {
-  { name: None, items: [], imports: [], source_ref: None }
+  { name: None, items: [], imports: [], source_ref: None, }
 }
 
 ///|
 pub fn Module::with_source_ref(self : Module, source : SourceRef) -> Module {
-  { ..self, source_ref: Some(source) }
+  { ..self, source_ref: Some(source), }
 }
 
 ///|
 pub fn Module::with_name(self : Module, name : String) -> Module {
-  { ..self, name: Some(name) }
+  { ..self, name: Some(name), }
 }
 
 ///|
@@ -308,7 +308,7 @@ pub fn Module::add_impl(self : Module, i : Impl) -> Module {
 ///|
 pub fn Module::with_import(self : Module, path : String) -> Module {
   let imports = self.imports.copy()
-  imports.push({ path, as_name: None })
+  imports.push({ path, as_name: None, })
   { ..self, imports, }
 }
 
@@ -319,6 +319,6 @@ pub fn Module::with_import_as(
   as_name : String,
 ) -> Module {
   let imports = self.imports.copy()
-  imports.push({ path, as_name: Some(as_name) })
+  imports.push({ path, as_name: Some(as_name), })
   { ..self, imports, }
 }

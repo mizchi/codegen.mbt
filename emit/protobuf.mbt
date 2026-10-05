@@ -9,17 +9,17 @@ pub struct ProtoEmitter {
 
 ///|
 pub fn ProtoEmitter::new() -> ProtoEmitter {
-  { indent_size: 2, proto_version: "proto3" }
+  { indent_size: 2, proto_version: "proto3", }
 }
 
 ///|
 pub fn ProtoEmitter::proto2(self : ProtoEmitter) -> ProtoEmitter {
-  { ..self, proto_version: "proto2" }
+  { ..self, proto_version: "proto2", }
 }
 
 ///|
 pub fn ProtoEmitter::emit_struct(self : ProtoEmitter, s : @ir.Struct) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_message_to(buf, s, 1)
   buf.to_string()
 }
@@ -77,7 +77,7 @@ fn ProtoEmitter::emit_field_to(
 
 ///|
 pub fn ProtoEmitter::emit_enum(self : ProtoEmitter, e : @ir.Enum) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   self.emit_enum_to(buf, e)
   buf.to_string()
 }
@@ -204,7 +204,7 @@ fn ProtoEmitter::emit_variant_to(
 
 ///|
 pub fn ProtoEmitter::emit_module(self : ProtoEmitter, m : @ir.Module) -> String {
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   // Syntax declaration
   buf.write_string("syntax = \"")
   buf.write_string(self.proto_version)
